@@ -206,7 +206,7 @@ yenilemez; servis başlatma ve UI kayıt açık yenileme noktalarıdır.
 | Konu | İnşa kararı | Yayın koşulu |
 |---|---|---|
 | Native wire | CLI 1.54.0 hash'ine sabit | Native golden karşılaştırma |
-| Tool streaming | Terminal tool-call doğrulanana kadar argümanlar sınırlı tamponda | Paralel tool ve mismatch testi |
+| Tool streaming | İlan edilmiş client function için start/delta anında iletilir; terminal tool-call doğrulanınca tamamlanır | HTTP üzerinden iki parça, paralel tool ve mismatch testi |
 | Thinking | Canlı native reasoning metni aynı içerikle aktarılır | High effort + CLI history round trip doğrulandı |
 | Anthropic signature | İmzasız native thinking imzasız çıkar | Claude Code 2.1.272 kabul etti; imza zorunlu başka SDK'lar test edilmedi |
 | pause_turn | Native continuation algoritması max 6 segment; başlangıçta kapalı | Kontrollü native/bridge çok-segment kaydı |
@@ -215,10 +215,11 @@ yenilemez; servis başlatma ve UI kayıt açık yenileme noktalarıdır.
 | Codex custom/freeform tool | 422; teslim edilen catalog apply_patch_tool_type=null kullanır | Belgeli function/shell profili gerçek Codex ile doğrulandı |
 | Desktop | 3P endpoint seçimi olan hedef sürüm | Ayrı gerçek uygulama testi |
 
-Tool argüman tamponu bilinçli sadeleştirmedir: kullanıcı tool'un parça parça
-yazılmasını daha geç görür; istemci sadece doğrulanmış çağrı alır.
-`ponytail:` gerçek tool delta gecikmesi sorun olduğunda, kesin provider ownership
-ve terminal hata davranışı doğrulanarak erken delta modu eklenebilir.
+Tool argümanları hem parça parça iletilir hem sınırlı bir doğrulama tamponunda
+tutulur. Preview çalıştırma onayı değildir: content_block_stop / arguments.done
+ancak native tool-call ile tam JSON eşleştikten sonra gönderilir. Ownership
+değişimi, mismatch ve yarım client çağrısı hata üretir. Provider araçları ve
+typed tool_search ayrı tutulur; function preview olarak gönderilmez.
 
 422 ile veri kaybını önlemek doğru hata davranışıdır; hedef istemcinin normal
 işlerini engelliyorsa bu durum “final modül tamam” demek için yeterli değildir.

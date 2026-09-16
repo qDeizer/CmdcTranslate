@@ -274,7 +274,7 @@ iletmez. Böylece hiç native text gelmese de bounded prelude ve heartbeat
 | start/start-step | Yaşam döngüsü, güvenli metadata; görünür çıktı değil |
 | text-start/delta/end | (segment,id) ile block; text içeriği değişmez |
 | reasoning-start/delta/end | Ayrı block; modele/istemciye göre render politikası |
-| tool-input-start/delta/end | (segment,callId) bağımsız argüman tamponu |
+| tool-input-start/delta/end | İlan edilmiş client function için tool-start/tool-delta anında; (segment,callId) doğrulama tamponu; end çağrıyı tamamlamaz |
 | tool-call | Terminal input/args object ile birikmiş JSON'u deep-equal doğrula |
 | tool-result/tool-error | Ownership-aware provider ledger; client'a tekrar çalıştırma yok |
 | finish-step | Segment kullanım aday bilgisi; final toplamla toplama yok |
@@ -287,15 +287,18 @@ Profil ID'siz eski text-delta biçimi gerektiriyorsa yalnız kaydı olan dalda
 synthetic block ID atanır. Bütün native start/end olaylarını atıp tek currentText
 kullanma. Kapanan ID'ye delta, mükerrer finish ve orphan tool end protocol error.
 
-Tool argümanı terminal input geldiğinde ancak geçerli JSON object ise
+Function preview başlarken client adı ve namespace geri eşlenir, her özgün delta
+aynen iletilir. Provider-executed araç preview olarak çıkmaz; preview başladıktan
+sonra ownership değişirse hata döner. Tool argümanı terminal input geldiğinde ancak geçerli JSON object ise
 `tool-call` BridgeEvent olur. Birikmiş rawArguments özgün metin olarak tutulur;
 terminal object ile JSON anahtar sırasından bağımsız eşitliği aranır. Mismatch
 durumunda {} veya terminal input ile sessiz onarım yok. Terminal-only tool call
 geçerliyse JSON.stringify ile tek argument string üretilebilir.
 
 Native finish'te açık araç/text/reasoning ledger'ı doğrulanır. Normal stop/tool
-finish'te tamamlanmamış argüman başarıya çevrilmez. Length yüzünden yarım
-argüman varsa çalıştırılabilir tool yayımlanmaz; incomplete/max_tokens dönülür.
+finish'te tamamlanmamış argüman başarıya çevrilmez. Client function preview'ı
+yarım kaldıysa length dahil incomplete_tool_arguments hatası döner; tool kapanışı
+ve başarılı terminal yayımlanmaz. Diğer length durumları incomplete/max_tokens döner.
 Finish sonrasındaki provider-metadata ve EOF okunmadan downstream terminal
 success üretilmez. Tail 5 s içinde EOF vermiyorsa terminal_drain_timeout.
 Bu süre tasarım varsayılanıdır; gerçek profile göre ölçülür.
@@ -368,8 +371,8 @@ sonra tam bir completed/incomplete/failed.
   source end ya da doğrulanmış terminal kapanışı belirler.
 - response.id, item.id ve call_id farklı alanlar. Output index item ilk
   görüldüğünde atanır; closure sırasına göre tekrar numaralanmaz.
-  Tamponlanan tool için “ilk görülme” doğrulanmış tool-call BridgeEvent anıdır;
-  native tentative tool-input-start daha önce gelmiş olabilir.
+  Client function için ilk görülme tool-start anıdır; index terminal kapanış
+  sırasından bağımsızdır. Terminal-only tool ve typed search ilk tool-call'da açılır.
 - Text: output_item.added, content_part.added, output_text.delta*,
   output_text.done, content_part.done, output_item.done.
 - Function: output_item.added, function_call_arguments.delta/done,

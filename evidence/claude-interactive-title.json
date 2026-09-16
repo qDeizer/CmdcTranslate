@@ -1,0 +1,111 @@
+{
+  "date": "2026-09-16T08:00:32.856Z",
+  "client": "Claude Code 2.1.273",
+  "mode": "interactive PTY using scripts/client.mjs",
+  "before": [
+    {
+      "protocol": "anthropic",
+      "code": "unsupported_parameter",
+      "param": "output_config",
+      "outcome": "error",
+      "durationMs": 4
+    },
+    {
+      "protocol": "anthropic",
+      "outcome": "ok",
+      "durationMs": 2598,
+      "metrics": {
+        "publicModel": "claude-Opus-muse",
+        "upstreamModel": "z-ai/glm-5.3-flash",
+        "requestedEffort": "low",
+        "upstreamEffort": "low",
+        "accountFingerprint": "03ad1e364eb6",
+        "requestBytes": 81457,
+        "tools": 26,
+        "conversationBound": true,
+        "stream": true,
+        "samePrefixAsPrevious": null,
+        "textDeltas": 1,
+        "firstTextMs": 2592,
+        "lastTextMs": 2592,
+        "toolDeltas": 0,
+        "firstToolMs": null,
+        "lastToolMs": null,
+        "upstreamReadyMs": 700,
+        "firstContentMs": 2592,
+        "inputTokens": 19239,
+        "outputTokens": 5,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": null,
+        "uncachedInputTokens": 19239
+      }
+    }
+  ],
+  "after": [
+    {
+      "protocol": "anthropic",
+      "outcome": "ok",
+      "durationMs": 5470,
+      "metrics": {
+        "publicModel": "claude-Opus-muse",
+        "upstreamModel": "z-ai/glm-5.3-flash",
+        "requestedEffort": "low",
+        "upstreamEffort": "low",
+        "accountFingerprint": "03ad1e364eb6",
+        "requestBytes": 81480,
+        "tools": 26,
+        "conversationBound": true,
+        "stream": true,
+        "samePrefixAsPrevious": null,
+        "textDeltas": 1,
+        "firstTextMs": 5468,
+        "lastTextMs": 5468,
+        "toolDeltas": 0,
+        "firstToolMs": null,
+        "lastToolMs": null,
+        "upstreamReadyMs": 3551,
+        "firstContentMs": 5468,
+        "inputTokens": 19245,
+        "outputTokens": 5,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": null,
+        "uncachedInputTokens": 19245
+      }
+    },
+    {
+      "protocol": "anthropic",
+      "outcome": "ok",
+      "durationMs": 6009,
+      "metrics": {
+        "publicModel": "claude-Opus-muse",
+        "upstreamModel": "z-ai/glm-5.3-flash",
+        "requestedEffort": "low",
+        "upstreamEffort": "low",
+        "accountFingerprint": "03ad1e364eb6",
+        "requestBytes": 81738,
+        "tools": 26,
+        "conversationBound": true,
+        "stream": true,
+        "samePrefixAsPrevious": false,
+        "textDeltas": 1,
+        "firstTextMs": 6008,
+        "lastTextMs": 6008,
+        "toolDeltas": 0,
+        "firstToolMs": null,
+        "lastToolMs": null,
+        "upstreamReadyMs": 1136,
+        "firstContentMs": 6008,
+        "inputTokens": 19278,
+        "outputTokens": 5,
+        "reasoningTokens": 0,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": null,
+        "uncachedInputTokens": 19278
+      }
+    }
+  ],
+  "sameTraceOnAfterTurns": true,
+  "passed": true
+}

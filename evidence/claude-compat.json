@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-16T07:14:19.805Z",
+  "launcher": "normal-settings-non-bare",
+  "inferenceCallLimit": 3,
+  "client": {
+    "exitCode": 0,
+    "spawnError": false
+  },
+  "observedRequestCount": 2,
+  "requests": [
+    {
+      "route": "/v1/messages",
+      "topLevelAllowed": true,
+      "topLevelKeyCount": 8,
+      "hasOutputConfig": true,
+      "outputConfigHasEffort": true,
+      "outputConfigHasFormat": false,
+      "outputFormatType": null,
+      "hasTools": true,
+      "toolCount": 23,
+      "messageCount": 2,
+      "decoder": {
+        "code": null,
+        "param": null
+      }
+    },
+    {
+      "route": "/v1/messages",
+      "topLevelAllowed": true,
+      "topLevelKeyCount": 8,
+      "hasOutputConfig": true,
+      "outputConfigHasEffort": true,
+      "outputConfigHasFormat": false,
+      "outputFormatType": null,
+      "hasTools": true,
+      "toolCount": 23,
+      "messageCount": 5,
+      "decoder": {
+        "code": null,
+        "param": null
+      }
+    }
+  ],
+  "bridgeDiagnostics": [
+    {
+      "protocol": "anthropic",
+      "outcome": "ok",
+      "code": null,
+      "durationMs": 8579
+    },
+    {
+      "protocol": "anthropic",
+      "outcome": "ok",
+      "code": null,
+      "durationMs": 5552
+    }
+  ],
+  "note": "No request content, credential, session/thread/trace identifier, model identifier, or stdout is retained."
+}

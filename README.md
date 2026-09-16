@@ -1,4 +1,4 @@
-# Astra1 · Command Code native bridge
+# CmdcTranslate · Astra1 Command Code native bridge
 
 **Çalışan yerel servis.** Claude Code ve Codex CLI üzerinden metin, araç hatası →
 düzeltme → sonuç ve araçtan gelen görsel döngüleri canlı olarak doğrulandı.
@@ -77,8 +77,8 @@ Son 100 kayıt bellektedir; restart ile silinir. API key ve prompt içermez.
 
 “Command Code model ID” gerçek bir açılır listedir. Panel her yüklenişte kayıtlı
 anahtarla Command Code `whoami` çağrısı yapar; başarılı olursa pinned Command Code
-CLI 1.54.0 `/model` kataloğundaki 75 geçerli ID'yi gösterir. Command Code API'de
-hesap bazlı bir `/models` endpointi yoktur (`/models` 404); bu nedenle listedeki
+CLI 1.54.0 `/model` kataloğundaki 75 ID'yi gösterir. Denenen `/models` yolu 404
+döndü; doğrulanmış canlı katalog yolu bulunmadığı için liste yereldir. Listedeki
 her modeli tek tek çalıştırıp ücret üretmez. Bir modelin hesap/plan erişimi ilk
 gerçek inference sırasında veya “Bağlantıyı test et” ile kesinleşir.
 
@@ -141,7 +141,7 @@ node scripts/smoke-clients.mjs codex image
 
 Kanıt: [evidence/release.md](evidence/release.md) ve
 [evidence/ui-release.md](evidence/ui-release.md).
-50 kısa test geçti; önceki 310 saniye sessizlik testi kanıtı korundu. İki CLI'da hatalı dosya okuma,
+58 kısa test ve 310 saniye sessizlik testi geçti. İki CLI'da hatalı dosya okuma,
 başarılı okuma ve son cevap; iki CLI'da araç görseli; altı canlı API vakası doğrulandı.
 
 ## Uyumluluk sınırları
@@ -154,18 +154,29 @@ başarılı okuma ve son cevap; iki CLI'da araç görseli; altı canlı API vaka
   OpenAI hosted web search ve Apps kapalıdır. Namespace içindeki function araçları
   API adaptöründe desteklenir. Bağımsız custom/freeform, hosted araçlar,
   previous_response_id, compaction ve JSON-schema output açık 422 döner.
-- Claude'un isteğe bağlı JSON-schema başlık üretme çağrısı 422 alabilir; ana
-  konuşma devam eder. Token sayacı tahminidir. Pause continuation canlı kanıt
+- Claude başlatıcısı terminal başlığı üretimini kapatır: bu yardımcı JSON-schema
+  çağrısı native API'de desteklenmediği için 422 üretiyordu. Mevcut Claude
+  oturumunu kapatıp başlatıcıyla yeniden açın. Doğrudan JSON-schema API talepleri
+  hâlâ açıkça reddedilir; hata mesajı güvenli alan yolunu gösterir.
+  Token sayacı tahminidir. Pause continuation canlı kanıt
   bulunmadığından kapalıdır.
 
 ## Geliştirme
 
 ### Streaming, oturum ve cache kontrolü
 
+[16 Eylül düzeltmesi ve canlı ölçümler](evidence/streaming-release.md): client
+function argümanları artık terminal çağrıyı beklemeden SSE'ye aktarılır. Kapanış
+JSON doğrulamasını bekler. Test edilen GLM/Muse yanıtlarında upstream bazı araç
+argümanlarını zaten tek parça gönderdi; köprü gerçek tokenları bundan önce
+üretemez. Panel ilk içerik süresini (metin, reasoning veya araç) ve hata alanını
+gösterir; satır açıklamasında metin/araç parça sayıları bulunur.
+
 [15 Eylül ölçümü](evidence/continuity-release.md): gerçek Claude CLI ile metin
 parçaları bridge'den en fazla 1 ms sonra SSE'ye, 8 ms içinde CLI çıktısına ulaştı.
-Metinden önce uzun bekleme upstream'de gözlendi. Tool argümanları terminal
-tool-call doğrulanana kadar tamponlanır; dosya/tool JSON çıktısı tek parça görünebilir.
+Metinden önce uzun bekleme upstream'de gözlendi. Tool argümanları 16 Eylül
+düzeltmesiyle gelir gelmez iletilir; tool tamamlanması terminal tool-call
+doğrulamasını bekler.
 Önceki Snake harness'i metin parçalarını sayar, terminale anlık yazdırmaz.
 
 Sunucu terminalindeki `metrics` her inference'ın süre/cache sayaçlarını ve
