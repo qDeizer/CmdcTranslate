@@ -7,6 +7,11 @@ Claude'un Anthropic Messages ve Codex'in OpenAI Responses isteklerini
 Command Code **/alpha/generate** endpointine, CLI 1.54.0'ın native zarfıyla taşır.
 Tek servis, yedi runtime modülü, sıfır npm bağımlılığı.
 
+**Bilinen istemci sınırı:** Kurulu Claude Code 2.1.273 Windows sürümünde SSE
+parçaları gelirken token sayacı artıyor, metin sonda topluca görünebiliyor.
+HTTP streaming ile terminal görünümü ayrı doğrulandı; görsel sorun henüz açık.
+[Video ve terminal incelemesi](evidence/render-investigation.md).
+
 ## Başlat
 
 Node 22 veya üstü gerekir. Bu makinede Node 24.19.0 ile test edildi.
