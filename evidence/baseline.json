@@ -1,0 +1,128 @@
+{
+  "contractVersion": "astra1-v1",
+  "status": "FOUNDATION_READY",
+  "generatedAt": "2026-09-15T03:48:19.052737+00:00",
+  "native": {
+    "version": "1.54.0",
+    "sha256": "0de512d28b0a66708fbb0e367443ad7f9f9d4e8eda62a76563f1493b997dd61d",
+    "inspection": "static-only"
+  },
+  "priorProjectTests": {
+    "project": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge",
+    "command": "npm.cmd test",
+    "node": "v24.19.0",
+    "exitCode": 0,
+    "monolithSelfChecksPassed": 20,
+    "modularTestsPassed": 20,
+    "claim": "existing prototype tests only; not Astra1 runtime tests"
+  },
+  "priorProjectProbes": {
+    "responsesCache": {
+      "expectedInput": 100,
+      "actualInput": 30
+    },
+    "earlyFinish": {
+      "emittedFinish": true,
+      "laterError": "incomplete_tool_arguments"
+    },
+    "activeSessionExpired": {
+      "expectedSecondAccepted": false,
+      "actualSecondAccepted": true
+    }
+  },
+  "astraRuntimeTests": "NOT_RUN_RUNTIME_NOT_IMPLEMENTED",
+  "liveInference": "NOT_RUN",
+  "rawCorpusRescanned": false,
+  "sources": [
+    {
+      "path": "C:\\Users\\Emre\\.codex\\attachments\\1d61f0a0-9c25-4eb2-a249-b797913aeb9a\\pasted-text.txt",
+      "bytes": 88311,
+      "sha256": "330509d4c189945341da6be021b73e50cb71e2b29cbee97904f59e7259f9ac3f"
+    },
+    {
+      "path": "C:\\Users\\Emre\\.codex\\attachments\\1cba7fdc-b58a-4fe2-9dab-170a9136fad1\\pasted-text.txt",
+      "bytes": 71153,
+      "sha256": "2e6637514b5f543f00f00e63421ba7fbf96a6c6eae4d5d0c9c6cfec30d0578f3"
+    },
+    {
+      "path": "C:\\Users\\Emre\\.codex\\attachments\\83385dcc-b6d6-49d7-9f0f-822e9ff73167\\pasted-text.txt",
+      "bytes": 7250,
+      "sha256": "ec9625b9fdf0e762771e02e78bb9e163e7e22c09c63b27a46438d8adfa2fff46"
+    },
+    {
+      "path": "C:\\Users\\Emre\\.codex\\attachments\\7e124bc1-1839-42aa-8aeb-85f734752525\\pasted-text.txt",
+      "bytes": 21675,
+      "sha256": "165cdeb9e96226f9f0be9d4b78ae71379739f2996cc32ac973a4c8270412012e"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\analysis-commandcode-2026-09-14\\native-cli-evidence.json",
+      "bytes": 1320,
+      "sha256": "81dcb0104e889cf41c302e37ab6d3076d86e27ee94aaf262dea6ef119ef0ac62"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\analysis-commandcode-2026-09-14\\native-cli.md",
+      "bytes": 6226,
+      "sha256": "b93b00446c5c318782c1854c4dccfee346c158be2f0e1fc823fb068c3fa85286"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\analysis-commandcode-2026-09-15\\muse-evidence-sanitized.json",
+      "bytes": 8682,
+      "sha256": "e4e698d1664aff24619b5317a944584cec80b4c429fae27661213384a2d31414"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\analysis-commandcode-2026-09-15\\COMMANDCODE_FINAL_COMPREHENSIVE_REPORT.md",
+      "bytes": 86477,
+      "sha256": "e4623466e6636c88e42698cf0beba9a4a97e90cb2ff5478a9d45b3fa700f87b1"
+    },
+    {
+      "path": "C:\\Users\\Emre\\AppData\\Roaming\\npm\\node_modules\\command-code\\dist\\cli.mjs",
+      "bytes": 2577202,
+      "sha256": "0de512d28b0a66708fbb0e367443ad7f9f9d4e8eda62a76563f1493b997dd61d"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\src\\egress.mjs",
+      "bytes": 11686,
+      "sha256": "9e49fd5b0a1fba82461b47c8df55e9d4c6e36e8c21be784ba123b09f6c8b8df3"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\src\\errors.mjs",
+      "bytes": 1005,
+      "sha256": "d3603b191c4ec93ae223f9f88ccca1ee0627d1ba84ed37e704a7d7b8e82eb986"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\src\\ingress.mjs",
+      "bytes": 10519,
+      "sha256": "47a52cc3ab94b7741c2615883508e58cd2637a5936133e4068ef7cdae3f11fd5"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\src\\native.mjs",
+      "bytes": 7406,
+      "sha256": "a10c2d92ec735b77ad0bddb9449e528cea40d9346315b6ae996602e01f233f3b"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\src\\server.mjs",
+      "bytes": 13426,
+      "sha256": "a00ab1fd2430f1923940c7bfb6bfc578e2748ef776fd787a9e4acdeabb0f5794"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\src\\session.mjs",
+      "bytes": 1723,
+      "sha256": "6c791d2668502b86cd0c7d9c8f42388612c56525fe9d098e4fd123ad27d227e6"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\src\\stream.mjs",
+      "bytes": 7728,
+      "sha256": "9883dbb1a98aecd8ec8937300b70d5176d9b4da15e7addcd8df8626be29cd97c"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\package.json",
+      "bytes": 452,
+      "sha256": "248a76645c7e32a136522f0f188a0ba73e1ae69a1fb80f07baa626d388dcf580"
+    },
+    {
+      "path": "C:\\Users\\Emre\\Desktop\\Taha\\commandcode-native-bridge\\bridge.mjs",
+      "bytes": 100148,
+      "sha256": "e92249f32f07ce2f09c03f9eabb0e364fddc8f9482a3fa848fc04970194a1044"
+    }
+  ]
+}

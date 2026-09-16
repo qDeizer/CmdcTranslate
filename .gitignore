@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env.*
+!.env.example
+config.local.json
+.astra-secrets.json
+.clients/
+evidence/private/
+*.log
+coverage/
+evidence/raw/

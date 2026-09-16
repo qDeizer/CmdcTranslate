@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yılan Oyunu</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07101c;color:#e8f4ff;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;display:flex;justify-content:center;min-height:100vh}
+main{width:100%;max-width:480px;padding:12px 12px 24px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.scores{width:100%;max-width:440px;background:#0d1828;border:1px solid #1c2f47;border-radius:10px;padding:8px 12px;display:flex;justify-content:space-between;font-size:14px}
+.scores b{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#52d3ff}
+#status{min-height:22px;font-size:14px;text-align:center;color:#cfe9ff;margin:0}
+#status.over{color:#ff6b6b}
+#status.won{color:#55d6a8}
+canvas{width:min(92vw,440px);height:auto;aspect-ratio:1/1;background:#0d1828;border:2px solid #1c2f47;border-radius:10px;display:block;touch-action:none}
+.controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+button{background:#52d3ff;color:#07101c;border:2px solid #52d3ff;border-radius:8px;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer}
+button:hover:not(:disabled){background:#7fe0ff;border-color:#7fe0ff}
+button:focus-visible{outline:3px solid #55d6a8;outline-offset:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
+#pauseBtn{background:#0d1828;color:#52d3ff}
+#pauseBtn:hover:not(:disabled){background:#16263c}
+.dpad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(3,48px);gap:6px;justify-content:center;margin-top:4px}
+.dpad button{padding:8px;font-size:18px;line-height:1}
+#help{font-size:13px;color:#9db4cc;text-align:center;max-width:440px;margin:0}
+</style>
+</head>
+<body>
+<main>
+<div class="scores" aria-label="Skor tablosu"><span>Skor: <b id="score">0</b></span><span>En iyi: <b id="best">0</b></span></div>
+<p id="status" role="status">Hazır</p>
+<canvas id="board" width="400" height="400" role="img" aria-label="20 carpi 20 Yilan oyun tahtasi. Ok tuslari veya WASD ile yonlendir."></canvas>
+<div class="controls"><button id="startBtn" type="button">Başla</button><button id="pauseBtn" type="button" disabled>Duraklat</button></div>
+<div class="dpad" aria-label="Mobil yön düğmeleri"><span></span><button id="upBtn" type="button" aria-label="Yukarı">▲</button><span></span><button id="leftBtn" type="button" aria-label="Sola">◀</button><button id="downBtn" type="button" aria-label="Aşağı">▼</button><button id="rightBtn" type="button" aria-label="Sağa">▶</button></div>
+<p id="help">Ok tuşları / WASD: yön. Space: duraklat / devam et. Yemi ye, duvara ve gövdeye çarpma.</p>
+</main>
+<script id="engine">
+function createGame(options){
+options=options||{};
+var cols=options.cols||20;
+var rows=options.rows||20;
+var rand=options.random||Math.random;
+function cp(p){return {x:p.x,y:p.y};}
+function cpS(s){return s.map(cp);}
+var cx=Math.floor(cols/2),cy=Math.floor(rows/2);
+var defS=[{x:cx,y:cy},{x:cx-1,y:cy},{x:cx-2,y:cy}].filter(function(p){return p.x>=0&&p.x<cols&&p.y>=0&&p.y<rows;});
+if(defS.length===0)defS=[{x:0,y:0}];
+var game={cols:cols,rows:rows,snake:cpS(options.snake||defS),dir:options.dir?cp(options.dir):{x:1,y:0},queue:[],food:null,score:0,status:"ready"};
+if("food" in options){game.food=options.food?cp(options.food):null;}
+function k(x,y){return x+","+y;}
+function emptyCells(){
+var occ={},i;
+for(i=0;i<game.snake.length;i++)occ[k(game.snake[i].x,game.snake[i].y)]=true;
+var out=[];
+for(var y=0;y<rows;y++)for(var x=0;x<cols;x++)if(!occ[k(x,y)])out.push({x:x,y:y});
+return out;
+}
+function placeFood(){
+var empty=emptyCells();
+if(empty.length===0){game.food=null;return null;}
+var i=Math.floor(rand()*empty.length)%empty.length;
+game.food=empty[i];
+return game.food;
+}
+game.spawnFood=placeFood;
+if(!("food" in options)){placeFood();}
+function same(a,b){return a.x===b.x&&a.y===b.y;}
+function opp(a,b){return a.x===-b.x&&a.y===-b.y;}
+game.setDirection=function(nx,ny){
+if(game.status!=="running"&&game.status!=="ready"&&game.status!=="paused")return false;
+var ok=(nx===1&&ny===0)||(nx===-1&&ny===0)||(nx===0&&ny===1)||(nx===0&&ny===-1);
+if(!ok)return false;
+var next={x:nx,y:ny};
+var last=game.queue.length?game.queue[game.queue.length-1]:game.dir;
+if(same(next,last))return false;
+if(opp(next,last))return false;
+if(opp(next,game.dir))return false;
+if(game.queue.length>=3)return false;
+game.queue.push(next);
+return true;
+};
+game.tick=function(){
+if(game.status!=="running")return game.status;
+if(game.queue.length)game.dir=game.queue.shift();
+var head={x:game.snake[0].x+game.dir.x,y:game.snake[0].y+game.dir.y};
+if(head.x<0||head.y<0||head.x>=cols||head.y>=rows){game.status="over";return game.status;}
+var grows=!!(game.food&&head.x===game.food.x&&head.y===game.food.y);
+var n=game.snake.length;
+var limit=grows?n:n-1;
+for(var i=0;i<limit;i++){if(game.snake[i].x===head.x&&game.snake[i].y===head.y){game.status="over";return game.status;}}
+game.snake.unshift(head);
+if(grows){
+game.score+=1;
+if(game.snake.length>=cols*rows){game.food=null;game.status="won";return game.status;}
+placeFood();
+if(!game.food)game.status="won";
+}else{
+game.snake.pop();
+}
+return game.status;
+};
+function resetState(){
+game.snake=cpS(options.snake||defS);
+game.dir=options.dir?cp(options.dir):{x:1,y:0};
+game.queue=[];
+game.score=0;
+game.status="ready";
+if("food" in options){game.food=options.food?cp(options.food):null;}
+else{game.food=null;placeFood();}
+}
+game.start=function(){
+if(game.status==="over"||game.status==="won")resetState();
+if(game.status==="ready")game.status="running";
+return game.status;
+};
+game.restart=function(){resetState();game.status="running";return game.status;};
+game.pause=function(){if(game.status==="running")game.status="paused";return game.status;};
+game.resume=function(){if(game.status==="paused")game.status="running";return game.status;};
+game.togglePause=function(){if(game.status==="running")game.status="paused";else if(game.status==="paused")game.status="running";return game.status;};
+return game;
+}
+</script>
+<script>
+(function(){
+var game=createGame({cols:20,rows:20});
+var canvas=document.getElementById("board");
+var ctx=canvas.getContext("2d");
+var scoreEl=document.getElementById("score");
+var bestEl=document.getElementById("best");
+var statusEl=document.getElementById("status");
+var startBtn=document.getElementById("startBtn");
+var pauseBtn=document.getElementById("pauseBtn");
+var best=0;
+try{best=parseInt(window.localStorage.getItem("snakeBest"),10)||0;}catch(e){best=0;}
+bestEl.textContent=String(best);
+var timer=null,SPEED=140;
+function stopTimer(){if(timer!==null){clearInterval(timer);timer=null;}}
+function startTimer(){stopTimer();timer=setInterval(function(){game.tick();if(game.score>best){best=game.score;try{window.localStorage.setItem("snakeBest",String(best));}catch(e){}}render();updateUI();if(game.status==="over"||game.status==="won")stopTimer();},SPEED);}
+function statusText(){
+if(game.status==="ready")return "Hazır - başlamak için Başla'ya bas";
+if(game.status==="running")return "Oynanıyor";
+if(game.status==="paused")return "Duraklatıldı";
+if(game.status==="over")return "Oyun Bitti - skor: "+game.score;
+if(game.status==="won")return "Kazandın! Skor: "+game.score;
+return game.status;
+}
+function updateUI(){
+scoreEl.textContent=String(game.score);
+bestEl.textContent=String(best);
+statusEl.textContent=statusText();
+statusEl.className=game.status==="over"?"over":(game.status==="won"?"won":"");
+if(game.status==="ready"){startBtn.textContent="Başla";pauseBtn.textContent="Duraklat";pauseBtn.disabled=true;}
+else if(game.status==="running"){startBtn.textContent="Yeniden Başlat";pauseBtn.textContent="Duraklat";pauseBtn.disabled=false;}
+else if(game.status==="paused"){startBtn.textContent="Yeniden Başlat";pauseBtn.textContent="Devam Et";pauseBtn.disabled=false;}
+else{startBtn.textContent="Yeniden Başlat";pauseBtn.textContent="Duraklat";pauseBtn.disabled=true;}
+}
+function render(){
+var W=canvas.width,H=canvas.height;
+var cw=W/game.cols,ch=H/game.rows;
+ctx.fillStyle="#0d1828";ctx.fillRect(0,0,W,H);
+ctx.strokeStyle="#1c2f47";ctx.lineWidth=1;ctx.beginPath();
+for(var x=1;x<game.cols;x++){ctx.moveTo(x*cw,0);ctx.lineTo(x*cw,H);}
+for(var y=1;y<game.rows;y++){ctx.moveTo(0,y*ch);ctx.lineTo(W,y*ch);}
+ctx.stroke();
+if(game.food){ctx.fillStyle="#ff6b6b";var fx=game.food.x*cw,fy=game.food.y*ch;ctx.beginPath();ctx.arc(fx+cw/2,fy+ch/2,Math.min(cw,ch)*0.36,0,Math.PI*2);ctx.fill();}
+for(var i=game.snake.length-1;i>=0;i--){var s=game.snake[i];ctx.fillStyle=i===0?"#52d3ff":(i%2?"#2fa8cf":"#3cc0ec");if(game.status==="over"&&i===0)ctx.fillStyle="#ff6b6b";if(game.status==="won")ctx.fillStyle="#55d6a8";ctx.fillRect(s.x*cw+1,s.y*ch+1,cw-2,ch-2);}
+}
+startBtn.addEventListener("click",function(){if(game.status==="ready")game.start();else game.restart();startTimer();render();updateUI();});
+function togglePauseUI(){game.togglePause();if(game.status==="running")startTimer();else stopTimer();updateUI();}
+pauseBtn.addEventListener("click",togglePauseUI);
+function bindDir(id,dx,dy){document.getElementById(id).addEventListener("click",function(){game.setDirection(dx,dy);});}
+bindDir("upBtn",0,-1);bindDir("downBtn",0,1);bindDir("leftBtn",-1,0);bindDir("rightBtn",1,0);
+document.addEventListener("keydown",function(e){
+var kk=e.key,handled=true;
+if(kk==="ArrowUp"||kk==="w"||kk==="W")game.setDirection(0,-1);
+else if(kk==="ArrowDown"||kk==="s"||kk==="S")game.setDirection(0,1);
+else if(kk==="ArrowLeft"||kk==="a"||kk==="A")game.setDirection(-1,0);
+else if(kk==="ArrowRight"||kk==="d"||kk==="D")game.setDirection(1,0);
+else if(kk===" "||kk==="Spacebar"){if(game.status==="running"||game.status==="paused")togglePauseUI();}
+else handled=false;
+if(handled)e.preventDefault();
+});
+document.addEventListener("visibilitychange",function(){if(document.hidden&&game.status==="running"){game.pause();stopTimer();updateUI();}});
+render();updateUI();
+})();
+</script>
+</body>
+</html>

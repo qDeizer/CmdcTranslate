@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-15",
+  "source": "Authenticated usage page DOM; manually transcribed selected rows, not an API capture",
+  "url": "https://commandcode.ai/deizermonokixhtf/settings/usage",
+  "accountVerifiedByWhoami": "deizermonokixhtf",
+  "modelIdVerifiedInNativeRequests": "meta/muse-spark-1.3-contributor",
+  "displayModel": "Muse Contributor",
+  "timeZone": "Europe/Istanbul",
+  "userReportedIngestionDelayMinutes": [3, 4],
+  "rows": [
+    { "client": "claude", "time": "19:21:37", "tracePrefix": "0b4dc874", "inputAll": 857, "output": 579, "durationSeconds": 8.869, "costUsd": "0.000190", "status": "COMPLETED" },
+    { "client": "claude", "time": "19:21:40", "tracePrefix": "0b4dc874", "inputAll": 1251, "output": 106, "durationSeconds": 2.307, "costUsd": "0.000135", "status": "COMPLETED" },
+    { "client": "claude", "time": "19:21:49", "tracePrefix": "0b4dc874", "inputAll": 2073, "output": 584, "durationSeconds": 7.982, "costUsd": "0.000213", "status": "COMPLETED" },
+    { "client": "codex", "time": "19:23:57", "tracePrefix": "d16544e5", "inputAll": 2836, "output": 400, "durationSeconds": 5.303, "costUsd": "0.000353", "status": "COMPLETED" },
+    { "client": "codex", "time": "19:23:59", "tracePrefix": "d16544e5", "inputAll": 3049, "output": 109, "durationSeconds": 1.431, "costUsd": "0.000316", "status": "COMPLETED" },
+    { "client": "codex", "time": "19:24:02", "tracePrefix": "d16544e5", "inputAll": 3182, "output": 31, "durationSeconds": 1.087, "costUsd": "0.0000499", "status": "COMPLETED" }
+  ],
+  "displayedCostSumUsd": { "claude": "0.000538", "codex": "0.0007189" },
+  "cacheDetailsVisibleInDashboard": false,
+  "matchingMethod": "Trace prefix plus request time, model and exact input/output counters match local native reports. Each request remains a separate billed row."
+}

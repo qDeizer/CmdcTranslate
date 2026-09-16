@@ -1,0 +1,466 @@
+{
+  "date": "2026-09-15T16:24:13.738Z",
+  "client": "codex",
+  "version": "codex-cli 0.154.0-alpha.6.2",
+  "case": "error-then-read",
+  "exitCode": 0,
+  "exactFinal": true,
+  "sawToolError": true,
+  "sawToolToken": true,
+  "sawToolImage": false,
+  "resultFields": [
+    "type",
+    "usage"
+  ],
+  "stderrPresent": true,
+  "successfulRequests": 3,
+  "configSha256": "412d6786207095e23421411bcc162a47595a78e498235fd5f80a8e856469f469",
+  "diagnostics": [
+    {
+      "path": "/v1/responses",
+      "bodyKeys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "reasoning": {
+        "effort": "low"
+      },
+      "include": [
+        "reasoning.encrypted_content"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        }
+      ],
+      "inputItems": [
+        {
+          "type": "message",
+          "role": "developer",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        }
+      ]
+    },
+    {
+      "requestId": "811c4b44-38b4-4c94-b36c-e2be47bdb2a7",
+      "protocol": "responses",
+      "outcome": "ok",
+      "durationMs": 5984,
+      "metrics": {
+        "publicModel": "astra-muse",
+        "upstreamModel": "meta/muse-spark-1.3-contributor",
+        "requestedEffort": "low",
+        "upstreamEffort": "low",
+        "accountFingerprint": "154c5a419e33",
+        "requestBytes": 10790,
+        "tools": 4,
+        "conversationBound": true,
+        "stream": true,
+        "samePrefixAsPrevious": null,
+        "textDeltas": 0,
+        "firstTextMs": null,
+        "lastTextMs": null,
+        "upstreamReadyMs": 590,
+        "inputTokens": 2836,
+        "outputTokens": 400,
+        "reasoningTokens": 304,
+        "cacheReadTokens": 113,
+        "cacheWriteTokens": null,
+        "uncachedInputTokens": 2723
+      }
+    },
+    {
+      "path": "/v1/responses",
+      "bodyKeys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "reasoning": {
+        "effort": "low"
+      },
+      "include": [
+        "reasoning.encrypted_content"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        }
+      ],
+      "inputItems": [
+        {
+          "type": "message",
+          "role": "developer",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "function_call",
+          "keys": [
+            "type",
+            "id",
+            "name",
+            "arguments",
+            "call_id"
+          ]
+        },
+        {
+          "type": "function_call_output",
+          "keys": [
+            "type",
+            "id",
+            "call_id",
+            "output"
+          ]
+        }
+      ]
+    },
+    {
+      "requestId": "074f71ab-1190-4890-b782-06c657b71b1e",
+      "protocol": "responses",
+      "outcome": "ok",
+      "durationMs": 1911,
+      "metrics": {
+        "publicModel": "astra-muse",
+        "upstreamModel": "meta/muse-spark-1.3-contributor",
+        "requestedEffort": "low",
+        "upstreamEffort": "low",
+        "accountFingerprint": "154c5a419e33",
+        "requestBytes": 11649,
+        "tools": 4,
+        "conversationBound": true,
+        "stream": true,
+        "samePrefixAsPrevious": true,
+        "textDeltas": 0,
+        "firstTextMs": null,
+        "lastTextMs": null,
+        "upstreamReadyMs": 601,
+        "inputTokens": 3049,
+        "outputTokens": 109,
+        "reasoningTokens": 13,
+        "cacheReadTokens": 113,
+        "cacheWriteTokens": null,
+        "uncachedInputTokens": 2936
+      }
+    },
+    {
+      "path": "/v1/responses",
+      "bodyKeys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "reasoning": {
+        "effort": "low"
+      },
+      "include": [
+        "reasoning.encrypted_content"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        }
+      ],
+      "inputItems": [
+        {
+          "type": "message",
+          "role": "developer",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "function_call",
+          "keys": [
+            "type",
+            "id",
+            "name",
+            "arguments",
+            "call_id"
+          ]
+        },
+        {
+          "type": "function_call_output",
+          "keys": [
+            "type",
+            "id",
+            "call_id",
+            "output"
+          ]
+        },
+        {
+          "type": "function_call",
+          "keys": [
+            "type",
+            "id",
+            "name",
+            "arguments",
+            "call_id"
+          ]
+        },
+        {
+          "type": "function_call_output",
+          "keys": [
+            "type",
+            "id",
+            "call_id",
+            "output"
+          ]
+        }
+      ]
+    },
+    {
+      "requestId": "2d316fb8-88b9-42fd-8939-453769daa969",
+      "protocol": "responses",
+      "outcome": "ok",
+      "durationMs": 3142,
+      "metrics": {
+        "publicModel": "astra-muse",
+        "upstreamModel": "meta/muse-spark-1.3-contributor",
+        "requestedEffort": "low",
+        "upstreamEffort": "low",
+        "accountFingerprint": "154c5a419e33",
+        "requestBytes": 12183,
+        "tools": 4,
+        "conversationBound": true,
+        "stream": true,
+        "samePrefixAsPrevious": true,
+        "textDeltas": 1,
+        "firstTextMs": 3139,
+        "lastTextMs": 3139,
+        "upstreamReadyMs": 1368,
+        "firstContentMs": 3139,
+        "inputTokens": 3182,
+        "outputTokens": 31,
+        "reasoningTokens": 17,
+        "cacheReadTokens": 2801,
+        "cacheWriteTokens": null,
+        "uncachedInputTokens": 381
+      }
+    }
+  ],
+  "passed": true
+}

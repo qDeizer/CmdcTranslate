@@ -1,0 +1,271 @@
+{
+  "date": "2026-09-15T11:17:29.910Z",
+  "client": "codex",
+  "version": "codex-cli 0.154.0-alpha.6.2",
+  "case": "tool-image",
+  "exitCode": 0,
+  "exactFinal": true,
+  "sawToolError": false,
+  "sawToolToken": false,
+  "sawToolImage": true,
+  "resultFields": [
+    "type",
+    "usage"
+  ],
+  "stderrPresent": true,
+  "successfulRequests": 2,
+  "configSha256": "88c199dc1f46d93a9d246791636b1741d1a17305a284faa67a7b06a5c8f684e6",
+  "diagnostics": [
+    {
+      "path": "/v1/responses",
+      "bodyKeys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "reasoning": {},
+      "include": [
+        "reasoning.encrypted_content"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        }
+      ],
+      "inputItems": [
+        {
+          "type": "message",
+          "role": "developer",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        }
+      ]
+    },
+    {
+      "requestId": "7261204c-2868-4ac5-911c-a7ed63094673",
+      "protocol": "responses",
+      "outcome": "ok",
+      "durationMs": 4517
+    },
+    {
+      "path": "/v1/responses",
+      "bodyKeys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "reasoning": {},
+      "include": [
+        "reasoning.encrypted_content"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "exec_command",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "write_stdin",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "request_user_input",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        },
+        {
+          "type": "function",
+          "name": "view_image",
+          "keys": [
+            "type",
+            "name",
+            "description",
+            "strict",
+            "parameters"
+          ]
+        }
+      ],
+      "inputItems": [
+        {
+          "type": "message",
+          "role": "developer",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "user",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "function_call",
+          "keys": [
+            "type",
+            "id",
+            "name",
+            "arguments",
+            "call_id"
+          ]
+        },
+        {
+          "type": "message",
+          "role": "assistant",
+          "keys": [
+            "type",
+            "id",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "type": "function_call_output",
+          "keys": [
+            "type",
+            "id",
+            "call_id",
+            "output"
+          ],
+          "outputParts": [
+            {
+              "type": "input_image",
+              "keys": [
+                "type",
+                "image_url",
+                "detail"
+              ],
+              "detail": "high"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "requestId": "671e07c1-b970-49cb-9e18-0eadfb084d7b",
+      "protocol": "responses",
+      "outcome": "ok",
+      "durationMs": 3888
+    }
+  ],
+  "passed": true
+}

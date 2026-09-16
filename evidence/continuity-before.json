@@ -1,0 +1,503 @@
+{
+  "startedAt": "2026-09-15T14:32:22.412Z",
+  "requests": [
+    {
+      "atMs": 787,
+      "incoming": {
+        "metadataFormat": "json",
+        "metadataKeys": [
+          "device_id",
+          "account_uuid",
+          "session_id"
+        ],
+        "uuidSession": true,
+        "sameHintAsPrevious": null,
+        "sessionHeaderNames": [
+          "x-claude-code-session-id"
+        ]
+      },
+      "nativeText": [],
+      "nativeTool": [
+        {
+          "atMs": 10382,
+          "chars": 25
+        }
+      ],
+      "bridgeText": [],
+      "bridgeTool": [
+        {
+          "atMs": 10385,
+          "chars": 25
+        }
+      ],
+      "sameSessionAsPrevious": null,
+      "traceparentPresent": false,
+      "samePrefixAsPrevious": null,
+      "sameThreadAsPrevious": null,
+      "promptCache": "omitted",
+      "systemCacheSections": 2,
+      "model": "meta/muse-spark-1.3-contributor",
+      "status": 200,
+      "finishAtMs": 10459,
+      "usage": {
+        "inputTokens": 857,
+        "inputTokenDetails": {
+          "noCacheTokens": 744,
+          "cacheReadTokens": 113
+        },
+        "outputTokens": 896,
+        "outputTokenDetails": {
+          "textTokens": 114,
+          "reasoningTokens": 782
+        },
+        "totalTokens": 1753,
+        "reasoningTokens": 782,
+        "cachedInputTokens": 113
+      }
+    },
+    {
+      "atMs": 10515,
+      "incoming": {
+        "metadataFormat": "json",
+        "metadataKeys": [
+          "device_id",
+          "account_uuid",
+          "session_id"
+        ],
+        "uuidSession": true,
+        "sameHintAsPrevious": true,
+        "sessionHeaderNames": [
+          "x-claude-code-session-id"
+        ]
+      },
+      "nativeText": [],
+      "nativeTool": [
+        {
+          "atMs": 12647,
+          "chars": 24
+        }
+      ],
+      "bridgeText": [],
+      "bridgeTool": [
+        {
+          "atMs": 12648,
+          "chars": 24
+        }
+      ],
+      "sameSessionAsPrevious": true,
+      "traceparentPresent": false,
+      "samePrefixAsPrevious": true,
+      "sameThreadAsPrevious": true,
+      "promptCache": "omitted",
+      "systemCacheSections": 2,
+      "model": "meta/muse-spark-1.3-contributor",
+      "status": 200,
+      "finishAtMs": 12678,
+      "usage": {
+        "inputTokens": 1251,
+        "inputTokenDetails": {
+          "noCacheTokens": 1138,
+          "cacheReadTokens": 113
+        },
+        "outputTokens": 128,
+        "outputTokenDetails": {
+          "textTokens": 68,
+          "reasoningTokens": 60
+        },
+        "totalTokens": 1379,
+        "reasoningTokens": 60,
+        "cachedInputTokens": 113
+      }
+    },
+    {
+      "atMs": 12735,
+      "incoming": {
+        "metadataFormat": "json",
+        "metadataKeys": [
+          "device_id",
+          "account_uuid",
+          "session_id"
+        ],
+        "uuidSession": true,
+        "sameHintAsPrevious": true,
+        "sessionHeaderNames": [
+          "x-claude-code-session-id"
+        ]
+      },
+      "nativeText": [
+        {
+          "atMs": 28354,
+          "chars": 25
+        },
+        {
+          "atMs": 28369,
+          "chars": 29
+        },
+        {
+          "atMs": 28370,
+          "chars": 91
+        },
+        {
+          "atMs": 28370,
+          "chars": 43
+        },
+        {
+          "atMs": 28370,
+          "chars": 86
+        },
+        {
+          "atMs": 28399,
+          "chars": 67
+        },
+        {
+          "atMs": 28435,
+          "chars": 94
+        },
+        {
+          "atMs": 28471,
+          "chars": 64
+        },
+        {
+          "atMs": 28509,
+          "chars": 48
+        },
+        {
+          "atMs": 28543,
+          "chars": 9
+        },
+        {
+          "atMs": 28582,
+          "chars": 90
+        },
+        {
+          "atMs": 28619,
+          "chars": 87
+        },
+        {
+          "atMs": 28653,
+          "chars": 63
+        },
+        {
+          "atMs": 28690,
+          "chars": 75
+        },
+        {
+          "atMs": 28726,
+          "chars": 71
+        },
+        {
+          "atMs": 28761,
+          "chars": 79
+        },
+        {
+          "atMs": 28800,
+          "chars": 70
+        },
+        {
+          "atMs": 28841,
+          "chars": 84
+        },
+        {
+          "atMs": 28874,
+          "chars": 66
+        },
+        {
+          "atMs": 28912,
+          "chars": 66
+        },
+        {
+          "atMs": 28945,
+          "chars": 58
+        },
+        {
+          "atMs": 28984,
+          "chars": 10
+        },
+        {
+          "atMs": 29018,
+          "chars": 11
+        },
+        {
+          "atMs": 29054,
+          "chars": 23
+        },
+        {
+          "atMs": 29089,
+          "chars": 96
+        },
+        {
+          "atMs": 29125,
+          "chars": 80
+        },
+        {
+          "atMs": 29167,
+          "chars": 90
+        },
+        {
+          "atMs": 29200,
+          "chars": 38
+        }
+      ],
+      "nativeTool": [],
+      "bridgeText": [
+        {
+          "atMs": 28355,
+          "chars": 25
+        },
+        {
+          "atMs": 28369,
+          "chars": 29
+        },
+        {
+          "atMs": 28370,
+          "chars": 91
+        },
+        {
+          "atMs": 28370,
+          "chars": 43
+        },
+        {
+          "atMs": 28370,
+          "chars": 86
+        },
+        {
+          "atMs": 28399,
+          "chars": 67
+        },
+        {
+          "atMs": 28436,
+          "chars": 94
+        },
+        {
+          "atMs": 28471,
+          "chars": 64
+        },
+        {
+          "atMs": 28509,
+          "chars": 48
+        },
+        {
+          "atMs": 28543,
+          "chars": 9
+        },
+        {
+          "atMs": 28582,
+          "chars": 90
+        },
+        {
+          "atMs": 28619,
+          "chars": 87
+        },
+        {
+          "atMs": 28654,
+          "chars": 63
+        },
+        {
+          "atMs": 28690,
+          "chars": 75
+        },
+        {
+          "atMs": 28726,
+          "chars": 71
+        },
+        {
+          "atMs": 28762,
+          "chars": 79
+        },
+        {
+          "atMs": 28800,
+          "chars": 70
+        },
+        {
+          "atMs": 28842,
+          "chars": 84
+        },
+        {
+          "atMs": 28874,
+          "chars": 66
+        },
+        {
+          "atMs": 28912,
+          "chars": 66
+        },
+        {
+          "atMs": 28945,
+          "chars": 58
+        },
+        {
+          "atMs": 28985,
+          "chars": 10
+        },
+        {
+          "atMs": 29018,
+          "chars": 11
+        },
+        {
+          "atMs": 29055,
+          "chars": 23
+        },
+        {
+          "atMs": 29089,
+          "chars": 96
+        },
+        {
+          "atMs": 29125,
+          "chars": 80
+        },
+        {
+          "atMs": 29167,
+          "chars": 90
+        },
+        {
+          "atMs": 29200,
+          "chars": 38
+        }
+      ],
+      "bridgeTool": [],
+      "sameSessionAsPrevious": true,
+      "traceparentPresent": false,
+      "samePrefixAsPrevious": true,
+      "sameThreadAsPrevious": true,
+      "promptCache": "omitted",
+      "systemCacheSections": 2,
+      "model": "meta/muse-spark-1.3-contributor",
+      "status": 200,
+      "finishAtMs": 29292,
+      "usage": {
+        "inputTokens": 2073,
+        "inputTokenDetails": {
+          "noCacheTokens": 936,
+          "cacheReadTokens": 1137
+        },
+        "outputTokens": 2064,
+        "outputTokenDetails": {
+          "textTokens": 385,
+          "reasoningTokens": 1679
+        },
+        "totalTokens": 4137,
+        "reasoningTokens": 1679,
+        "cachedInputTokens": 1137
+      }
+    }
+  ],
+  "cliText": [
+    {
+      "atMs": 28358,
+      "chars": 25
+    },
+    {
+      "atMs": 28371,
+      "chars": 29
+    },
+    {
+      "atMs": 28371,
+      "chars": 91
+    },
+    {
+      "atMs": 28372,
+      "chars": 43
+    },
+    {
+      "atMs": 28372,
+      "chars": 86
+    },
+    {
+      "atMs": 28400,
+      "chars": 67
+    },
+    {
+      "atMs": 28437,
+      "chars": 94
+    },
+    {
+      "atMs": 28473,
+      "chars": 64
+    },
+    {
+      "atMs": 28511,
+      "chars": 48
+    },
+    {
+      "atMs": 28545,
+      "chars": 9
+    },
+    {
+      "atMs": 28584,
+      "chars": 90
+    },
+    {
+      "atMs": 28621,
+      "chars": 87
+    },
+    {
+      "atMs": 28655,
+      "chars": 63
+    },
+    {
+      "atMs": 28692,
+      "chars": 75
+    },
+    {
+      "atMs": 28727,
+      "chars": 71
+    },
+    {
+      "atMs": 28763,
+      "chars": 79
+    },
+    {
+      "atMs": 28801,
+      "chars": 70
+    },
+    {
+      "atMs": 28843,
+      "chars": 84
+    },
+    {
+      "atMs": 28875,
+      "chars": 66
+    },
+    {
+      "atMs": 28914,
+      "chars": 66
+    },
+    {
+      "atMs": 28947,
+      "chars": 58
+    },
+    {
+      "atMs": 28986,
+      "chars": 10
+    },
+    {
+      "atMs": 29020,
+      "chars": 11
+    },
+    {
+      "atMs": 29056,
+      "chars": 23
+    },
+    {
+      "atMs": 29092,
+      "chars": 96
+    },
+    {
+      "atMs": 29133,
+      "chars": 80
+    },
+    {
+      "atMs": 29169,
+      "chars": 90
+    },
+    {
+      "atMs": 29202,
+      "chars": 38
+    }
+  ],
+  "errors": [
+    "not_found"
+  ],
+  "clientIsError": false,
+  "finalMarker": true,
+  "exitCode": 0
+}

@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-15T11:17:35.686Z",
+  "upstreamModel": "meta/muse-spark-1.3-contributor",
+  "configSha256": "cf769c2547f57b71b342aef02f87184e47a11afcf3d9851a5b282ec1eb65f834",
+  "fourConcurrentLiveTurns": true,
+  "reports": [
+    {
+      "protocol": "anthropic",
+      "stream": false,
+      "case": "text",
+      "status": 200,
+      "exactContent": true,
+      "terminal": "end_turn",
+      "usage": {
+        "input_tokens": 7335,
+        "output_tokens": 20,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0
+      },
+      "durationMs": 3360,
+      "passed": true
+    },
+    {
+      "protocol": "responses",
+      "stream": false,
+      "case": "text",
+      "status": 200,
+      "exactContent": true,
+      "terminal": "completed",
+      "usage": {
+        "input_tokens": 7335,
+        "output_tokens": 20,
+        "total_tokens": 7355,
+        "input_tokens_details": {
+          "cached_tokens": 7281
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 7
+        }
+      },
+      "durationMs": 3493,
+      "passed": true
+    },
+    {
+      "protocol": "responses",
+      "stream": true,
+      "case": "text",
+      "status": 200,
+      "exactContent": true,
+      "terminal": "response.completed",
+      "sequence": true,
+      "usage": {
+        "input_tokens": 7335,
+        "output_tokens": 23,
+        "total_tokens": 7358,
+        "input_tokens_details": {
+          "cached_tokens": 7281
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 10
+        }
+      },
+      "durationMs": 3557,
+      "passed": true
+    },
+    {
+      "protocol": "anthropic",
+      "stream": true,
+      "case": "text",
+      "status": 200,
+      "exactContent": true,
+      "terminal": "message_stop",
+      "usage": {
+        "input_tokens": 7335,
+        "output_tokens": 20,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0
+      },
+      "durationMs": 4005,
+      "passed": true
+    },
+    {
+      "protocol": "anthropic",
+      "stream": false,
+      "case": "user-image",
+      "status": 200,
+      "exactContent": true,
+      "terminal": "end_turn",
+      "usage": {
+        "input_tokens": 7357,
+        "output_tokens": 56,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0
+      },
+      "durationMs": 2113,
+      "passed": true
+    },
+    {
+      "protocol": "responses",
+      "stream": true,
+      "case": "user-image",
+      "status": 200,
+      "exactContent": true,
+      "terminal": "response.completed",
+      "sequence": true,
+      "usage": {
+        "input_tokens": 7357,
+        "output_tokens": 194,
+        "total_tokens": 7551,
+        "input_tokens_details": {
+          "cached_tokens": 7281
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 183
+        }
+      },
+      "durationMs": 4144,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

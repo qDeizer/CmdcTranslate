@@ -1,0 +1,20 @@
+{
+  "name": "astra1-native-bridge",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Local Anthropic Messages and OpenAI Responses bridge to Command Code native NDJSON.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node scripts/run.mjs",
+    "start:direct": "node src/server.mjs",
+    "claude": "node scripts/client.mjs claude",
+    "codex": "node scripts/client.mjs codex",
+    "test:claude": "node scripts/smoke-clients.mjs claude error",
+    "test:codex": "node scripts/smoke-clients.mjs codex error",
+    "test:api": "node scripts/smoke-api.mjs",
+    "test": "node --test test/native.test.mjs test/adapters.test.mjs test/server.test.mjs test/compatibility.test.mjs",
+    "test:long": "node --test test/long.test.mjs",
+    "check:foundation": "node scripts/check-foundation.mjs"
+  }
+}

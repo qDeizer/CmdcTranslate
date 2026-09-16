@@ -1,0 +1,68 @@
+{
+  "contractVersion": "astra1-v1",
+  "listen": {
+    "host": "127.0.0.1",
+    "port": 8742
+  },
+  "auth": {
+    "gatewayTokenEnv": "ASTRA_GATEWAY_TOKEN",
+    "upstreamKeyEnv": "COMMANDCODE_API_KEY",
+    "sessionSecretEnv": "ASTRA_SESSION_SECRET"
+  },
+  "upstream": {
+    "baseUrl": "https://api.commandcode.ai",
+    "path": "/alpha/generate",
+    "cliVersion": "1.54.0",
+    "cliEnvironment": "production",
+    "projectSlug": "__SET_REAL_PROJECT_SLUG__",
+    "workspaceId": "__SET_WORKSPACE_ID__",
+    "config": {},
+    "tasteLearning": false,
+    "permissionMode": "standard",
+    "includeThreadId": true,
+    "pauseContinuation": {
+      "enabled": false,
+      "maxSegments": 6
+    }
+  },
+  "models": {
+    "astra-muse": {
+      "upstreamModel": "meta/muse-spark-1.3-contributor",
+      "defaultMaxTokens": 64000,
+      "vision": true,
+      "reasoningText": "verified",
+      "efforts": ["high"],
+      "clientToolSearch": false
+    },
+    "claude-astra-muse": {
+      "upstreamModel": "meta/muse-spark-1.3-contributor",
+      "defaultMaxTokens": 64000,
+      "vision": true,
+      "reasoningText": "verified",
+      "efforts": ["high"],
+      "clientToolSearch": false
+    }
+  },
+  "limits": {
+    "requestBytes": 16777216,
+    "nativeLineBytes": 8388608,
+    "toolArgumentBytes": 8388608,
+    "turnOutputBytes": 33554432,
+    "maxActiveTurns": 8,
+    "maxSessions": 1024
+  },
+  "timeouts": {
+    "bodyReadMs": 60000,
+    "upstreamHeadersMs": 120000,
+    "upstreamIdleMs": 600000,
+    "downstreamStallMs": 120000,
+    "terminalDrainMs": 5000,
+    "preludeMs": 1000,
+    "heartbeatMs": 12000,
+    "sessionIdleTtlMs": 3600000
+  },
+  "prelude": {
+    "maxBytes": 65536,
+    "maxEvents": 64
+  }
+}

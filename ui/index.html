@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Astra Console</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Astra Console ana sayfa">
+      <span>ASTRA</span><i></i><small>local bridge</small>
+    </a>
+    <div class="top-meta">
+      <span>Windows</span><span>Local only</span><span>v0.2.0</span>
+    </div>
+  </header>
+
+  <main class="layout" aria-busy="true">
+    <form id="config-form" class="config-pane" autocomplete="off">
+      <section class="form-section" aria-labelledby="connection-title">
+        <div class="section-number" aria-hidden="true">1</div>
+        <div class="section-body">
+          <h1 id="connection-title">Command Code bağlantısı</h1>
+          <p>API anahtarınız yalnızca bu cihazdaki yerel secret dosyasında saklanır.</p>
+          <div class="field connection-field">
+            <label for="api-key">API anahtarı</label>
+            <div class="input-action">
+              <input id="api-key" name="apiKey" type="password" maxlength="4096"
+                spellcheck="false" aria-describedby="key-help" placeholder="Yükleniyor…">
+              <button id="toggle-key" class="icon-button" type="button" aria-label="Anahtarı göster" title="Anahtarı göster">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </button>
+            </div>
+            <small id="key-help">Kaydedilmiş anahtar ekranda geri gösterilmez.</small>
+          </div>
+          <div class="inline-status">
+            <span id="key-indicator" class="status-dot pending"></span>
+            <div><strong id="key-status">Anahtar durumu kontrol ediliyor</strong><small id="endpoint-inline"></small></div>
+            <button id="test-button" class="button secondary" type="button">Bağlantıyı test et</button>
+          </div>
+          <p id="account-status" role="status">Hesap kimliği doğrulanıyor…</p>
+        </div>
+      </section>
+
+      <section class="form-section" aria-labelledby="model-title">
+        <div class="section-number" aria-hidden="true">2</div>
+        <div class="section-body">
+          <h2 id="model-title">Model yönlendirme</h2>
+          <p>İstemcinin model adı → Command Code modeli. Her satırın effort eşlemesi bağımsızdır.</p>
+          <p id="model-catalog-status" role="status">Command Code model kataloğu doğrulanıyor…</p>
+          <div id="model-routes"></div>
+          <button id="add-model" class="button secondary" type="button">Model yönlendirmesi ekle</button>
+          <h3>İstemci başlangıç ayarları</h3>
+          <div class="field-grid">
+            <div class="field"><label for="claude-default-model">Claude Code modeli</label><select id="claude-default-model"></select></div>
+            <div class="field"><label for="claude-default-effort">Claude başlangıç effort</label><select id="claude-default-effort"><option>low</option><option>medium</option><option>high</option><option>xhigh</option><option>max</option></select></div>
+            <div class="field"><label for="codex-default-model">Codex modeli</label><select id="codex-default-model"></select></div>
+            <div class="field"><label for="codex-default-effort">Codex başlangıç effort</label><select id="codex-default-effort"><option>none</option><option>minimal</option><option>low</option><option>medium</option><option>high</option><option>xhigh</option></select></div>
+            <div class="field field-wide"><label for="trace-mode">Trace gruplaması</label><select id="trace-mode"><option value="conversation">Aynı konuşma → aynı trace, her istek → ayrı span</option><option value="request">Her istek → ayrı trace</option></select><small>Konuşma kimliği göndermeyen istemcilerin istekleri ayrı tutulur.</small></div>
+          </div>
+          <details class="protocol-guide"><summary>İstekler nasıl çevriliyor?</summary>
+            <dl><dt>Claude Code · POST /v1/messages</dt><dd>model → satırdaki Command Code modeli; output_config.effort → effort tablosu; messages/tools → native mesajlar ve araçlar.</dd>
+            <dt>Codex · POST /v1/responses</dt><dd>model → aynı yönlendirme tablosu; reasoning.effort → effort tablosu; input/instructions/tools → native karşılıkları.</dd>
+            <dt>Yanıt akışı</dt><dd>Native NDJSON → Anthropic veya Responses SSE. Metin geldiği anda aktarılır. Tool argümanları doğrulanmış çağrı tamamlanınca gönderilir.</dd>
+            <dt>ChatGPT web ve Chat Completions</dt><dd>ChatGPT web bu yerel provider ayarını kullanmaz. /v1/chat/completions desteklenmez; OpenAI uyumlu istemci Responses göndermelidir.</dd></dl>
+          </details>
+        </div>
+      </section>
+
+      <section class="form-section" aria-labelledby="workspace-title">
+        <div class="section-number" aria-hidden="true">3</div>
+        <div class="section-body">
+          <h2 id="workspace-title">Çalışma alanı</h2>
+          <p>Claude ve Codex bu dizinde açılır; native istek de aynı proje bilgisini taşır.</p>
+          <div class="field-grid">
+            <div class="field field-wide">
+              <label for="workspace">Mutlak dizin yolu</label>
+              <input id="workspace" name="workspaceId" required maxlength="512" spellcheck="false">
+            </div>
+            <div class="field">
+              <label for="project-slug">Proje slug</label>
+              <input id="project-slug" name="projectSlug" required maxlength="256" pattern="[A-Za-z0-9][A-Za-z0-9._-]*" spellcheck="false">
+            </div>
+            <div class="field">
+              <label for="permission-mode">Native izin modu</label>
+              <select id="permission-mode" name="permissionMode">
+                <option value="standard">Standard</option>
+                <option value="plan">Plan</option>
+                <option value="auto-accept">Auto accept</option>
+              </select>
+            </div>
+          </div>
+          <label class="switch-row">
+            <span><strong>Taste learning</strong><small>Command Code öğrenme sinyalini native başlıkta iletir.</small></span>
+            <input id="taste-learning" name="tasteLearning" type="checkbox" role="switch">
+          </label>
+        </div>
+      </section>
+
+      <footer class="action-row">
+        <button id="save-button" class="button primary" type="submit">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12l2 2v16H5V3Zm3 0v6h8V3M8 21v-7h8v7"/></svg>
+          <span>Kaydet ve uygula</span>
+        </button>
+        <div id="save-summary" class="save-summary" role="status" aria-live="polite">
+          <span class="status-dot pending"></span>
+          <div><strong>Ayarlar yükleniyor</strong><small>Yerel servisle bağlantı kuruluyor.</small></div>
+        </div>
+      </footer>
+    </form>
+
+    <aside class="status-pane" aria-labelledby="status-title">
+      <div class="status-heading">
+        <h2 id="status-title">Entegrasyon durumu</h2>
+        <span class="online-label"><span class="status-dot success"></span><span id="overall-status">Kontrol ediliyor</span></span>
+      </div>
+
+      <div class="route-map" aria-label="Claude ve Codex yerel endpoint yönlendirmesi">
+        <div class="route-client" id="claude-node"><span class="status-dot"></span>Claude Code</div>
+        <div class="route-client" id="codex-node"><span class="status-dot"></span>Codex</div>
+        <div class="route-lines" aria-hidden="true"><i></i><i></i><b></b></div>
+        <div class="route-endpoint"><span class="status-dot success"></span><div><strong>Command Code</strong><code id="endpoint-map"></code></div></div>
+      </div>
+
+      <div class="status-list">
+        <div class="status-row">
+          <span class="status-dot success"></span>
+          <div><strong>Yerel köprü</strong><small id="endpoint-status"></small></div>
+          <em>Çevrimiçi</em>
+        </div>
+        <div class="status-row">
+          <span id="claude-dot" class="status-dot pending"></span>
+          <div><strong>Claude Code</strong><small id="claude-version">Kontrol ediliyor</small></div>
+          <em id="claude-ready">—</em>
+        </div>
+        <div class="status-row">
+          <span id="codex-dot" class="status-dot pending"></span>
+          <div><strong>Codex</strong><small id="codex-version">Kontrol ediliyor</small></div>
+          <em id="codex-ready">—</em>
+        </div>
+      </div>
+
+      <section class="commands" aria-labelledby="commands-title">
+        <h3 id="commands-title">İstemciyi aç</h3>
+        <p>Görünür bir terminal açar. Önce formdaki ayarlar kaydedilir; istemci seçtiğiniz model ve effort ile başlar.</p>
+        <div class="launch-buttons"><button type="button" id="launch-claude" class="button primary">Claude Code başlat</button><button type="button" id="launch-codex" class="button secondary">Codex başlat</button></div>
+        <label>Claude Code</label>
+        <div class="command"><code id="claude-command">npm.cmd run claude</code><button type="button" data-copy="claude-command" aria-label="Claude komutunu kopyala" title="Kopyala">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="1"/><path d="M16 8V4H5v12h3"/></svg>
+        </button></div>
+        <label>Codex</label>
+        <div class="command"><code id="codex-command">npm.cmd run codex</code><button type="button" data-copy="codex-command" aria-label="Codex komutunu kopyala" title="Kopyala">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="1"/><path d="M16 8V4H5v12h3"/></svg>
+        </button></div>
+      </section>
+
+      <section class="last-result" aria-labelledby="result-title">
+        <h3 id="result-title">Son işlem</h3>
+        <div id="result-content" class="result-content">
+          <span class="status-dot pending"></span>
+          <div><strong>Henüz işlem yok</strong><small>Kaydettiğinizde sonuç burada görünür.</small></div>
+        </div>
+      </section>
+      <p class="local-note"><span class="status-dot success"></span>Bu panel yalnızca 127.0.0.1 üzerinde sunulur.</p>
+    </aside>
+  </main>
+  <section class="request-panel" aria-labelledby="requests-title">
+    <div class="request-heading"><div><h2 id="requests-title">Bu köprüden geçen istekler</h2><p id="request-summary">Yeni istekler burada görünecek. Son 100 kayıt yalnız bellekte tutulur; prompt ve araç içeriği kaydedilmez.</p></div><button id="refresh-requests" type="button" class="button secondary">Yenile</button></div>
+    <div class="table-scroll"><table><thead><tr><th>Zaman / istemci</th><th>Model → Command Code</th><th>Effort</th><th>İlk metin / toplam</th><th>Input / cache read / uncached</th><th>Trace</th><th>Sonuç</th></tr></thead><tbody id="request-rows"></tbody></table></div>
+    <p class="table-note">Cache read ≠ toplam input. “?” upstream’in bildirmediği değerdir. Ücret tahmin edilmez; gerçek fatura için Command Code kullanım ayrıntılarına bakın. Ortak trace göndermek provider’ın trace’i kabul ettiğini tek başına kanıtlamaz.</p>
+  </section>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "models": [{
+    "slug": "astra-muse",
+    "display_name": "Astra1 / Command Code Muse",
+    "description": "Command Code native model through the local Astra1 bridge",
+    "supported_reasoning_levels": [{"effort": "high", "description": "Native high reasoning effort"}],
+    "shell_type": "unified_exec",
+    "visibility": "list",
+    "supported_in_api": true,
+    "priority": 1,
+    "support_verbosity": false,
+    "supports_reasoning_summary_parameter": true,
+    "default_reasoning_summary": "none",
+    "apply_patch_tool_type": null,
+    "truncation_policy": {"mode": "bytes", "limit": 10000},
+    "experimental_supported_tools": [],
+    "input_modalities": ["text", "image"],
+    "supports_search_tool": false,
+    "supports_experimental_context": false,
+    "use_responses_lite": false,
+    "tool_mode": "direct",
+    "model_messages": {
+      "instructions_template": "You are a coding assistant. Inspect the workspace before making changes. Follow the user's instructions, local project rules and tool permission requirements. Use tools to verify your work. Never claim a command succeeded unless its result confirms success. Keep answers concise."
+    }
+  }]
+}

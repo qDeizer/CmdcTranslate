@@ -1,0 +1,247 @@
+{
+  "date": "2026-09-15T11:48:29.385Z",
+  "client": "claude",
+  "version": "2.1.272 (Claude Code)",
+  "case": "error-then-read",
+  "exitCode": 0,
+  "exactFinal": true,
+  "sawToolError": true,
+  "sawToolToken": true,
+  "sawToolImage": false,
+  "resultFields": [
+    "duration_api_ms",
+    "stop_reason",
+    "session_id",
+    "total_cost_usd",
+    "usage",
+    "modelUsage",
+    "permission_denials",
+    "terminal_reason",
+    "fast_mode_state",
+    "fast_mode_disabled_reason",
+    "subagent_stats",
+    "is_error",
+    "num_turns",
+    "subtype",
+    "api_error_status",
+    "result",
+    "ttft_ms",
+    "type",
+    "duration_ms",
+    "uuid",
+    "ttft_stream_ms",
+    "time_to_request_ms",
+    "first_content_frame_ms",
+    "queued_turn_count",
+    "result_index"
+  ],
+  "stderrPresent": true,
+  "permissionDenialCount": 0,
+  "successfulRequests": 3,
+  "configSha256": "88c199dc1f46d93a9d246791636b1741d1a17305a284faa67a7b06a5c8f684e6",
+  "diagnostics": [
+    {
+      "requestId": "b4c7a36d-17e3-4121-8dc4-c4a000a6c4fa",
+      "protocol": "responses",
+      "outcome": "error",
+      "code": "not_found",
+      "durationMs": 4
+    },
+    {
+      "path": "/v1/messages?beta=true",
+      "bodyKeys": [
+        "model",
+        "messages",
+        "system",
+        "tools",
+        "metadata",
+        "max_tokens",
+        "output_config",
+        "stream"
+      ],
+      "roles": [
+        "user",
+        "system"
+      ],
+      "output_config": {
+        "effort": "high"
+      },
+      "tools": [
+        {
+          "name": "Read",
+          "keys": [
+            "name",
+            "description",
+            "input_schema"
+          ]
+        }
+      ],
+      "messageParts": [
+        {
+          "type": "text",
+          "keys": [
+            "type",
+            "text",
+            "cache_control"
+          ],
+          "cache": {
+            "type": "ephemeral"
+          }
+        }
+      ],
+      "inputItems": []
+    },
+    {
+      "requestId": "04a9d088-8f3e-41a6-9ad4-d22c8e1f356a",
+      "protocol": "anthropic",
+      "outcome": "ok",
+      "durationMs": 3785
+    },
+    {
+      "path": "/v1/messages?beta=true",
+      "bodyKeys": [
+        "model",
+        "messages",
+        "system",
+        "tools",
+        "metadata",
+        "max_tokens",
+        "output_config",
+        "stream"
+      ],
+      "roles": [
+        "user",
+        "system",
+        "assistant",
+        "user"
+      ],
+      "output_config": {
+        "effort": "high"
+      },
+      "tools": [
+        {
+          "name": "Read",
+          "keys": [
+            "name",
+            "description",
+            "input_schema"
+          ]
+        }
+      ],
+      "messageParts": [
+        {
+          "type": "tool_use",
+          "keys": [
+            "type",
+            "id",
+            "name",
+            "input"
+          ]
+        },
+        {
+          "type": "tool_result",
+          "keys": [
+            "type",
+            "content",
+            "is_error",
+            "tool_use_id",
+            "cache_control"
+          ],
+          "cache": {
+            "type": "ephemeral"
+          }
+        }
+      ],
+      "inputItems": []
+    },
+    {
+      "requestId": "0bfca37f-2d21-426c-86d9-2bff8a05ee1c",
+      "protocol": "anthropic",
+      "outcome": "ok",
+      "durationMs": 9120
+    },
+    {
+      "path": "/v1/messages?beta=true",
+      "bodyKeys": [
+        "model",
+        "messages",
+        "system",
+        "tools",
+        "metadata",
+        "max_tokens",
+        "output_config",
+        "stream"
+      ],
+      "roles": [
+        "user",
+        "system",
+        "assistant",
+        "user",
+        "assistant",
+        "user"
+      ],
+      "output_config": {
+        "effort": "high"
+      },
+      "tools": [
+        {
+          "name": "Read",
+          "keys": [
+            "name",
+            "description",
+            "input_schema"
+          ]
+        }
+      ],
+      "messageParts": [
+        {
+          "type": "tool_use",
+          "keys": [
+            "type",
+            "id",
+            "name",
+            "input"
+          ]
+        },
+        {
+          "type": "tool_result",
+          "keys": [
+            "type",
+            "content",
+            "is_error",
+            "tool_use_id"
+          ]
+        },
+        {
+          "type": "tool_use",
+          "keys": [
+            "type",
+            "id",
+            "name",
+            "input"
+          ]
+        },
+        {
+          "type": "tool_result",
+          "keys": [
+            "tool_use_id",
+            "type",
+            "content",
+            "cache_control"
+          ],
+          "cache": {
+            "type": "ephemeral"
+          }
+        }
+      ],
+      "inputItems": []
+    },
+    {
+      "requestId": "9de205c7-a1af-4204-b5a3-58ceaa1d9094",
+      "protocol": "anthropic",
+      "outcome": "ok",
+      "durationMs": 3073
+    }
+  ],
+  "passed": true
+}

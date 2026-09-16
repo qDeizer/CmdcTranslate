@@ -1,0 +1,1297 @@
+{
+  "startedAt": "2026-09-15T16:21:27.345Z",
+  "client": "2.1.272 (Claude Code)",
+  "verifiedAccount": "deizermonokixhtf",
+  "model": "meta/muse-spark-1.3-contributor",
+  "requests": [
+    {
+      "atMs": 646,
+      "incoming": {
+        "metadataFormat": "json",
+        "metadataKeys": [
+          "device_id",
+          "account_uuid",
+          "session_id"
+        ],
+        "uuidSession": true,
+        "sameHintAsPrevious": null,
+        "sessionHeaderNames": [
+          "x-claude-code-session-id"
+        ]
+      },
+      "nativeText": [],
+      "nativeTool": [
+        {
+          "atMs": 10727,
+          "chars": 25
+        }
+      ],
+      "bridgeText": [],
+      "bridgeTool": [
+        {
+          "atMs": 10728,
+          "chars": 25
+        }
+      ],
+      "sameSessionAsPrevious": null,
+      "traceparentPresent": true,
+      "tracePrefix": "0b4dc874",
+      "sameTraceAsPrevious": null,
+      "differentSpanFromPrevious": null,
+      "samePrefixAsPrevious": null,
+      "sameThreadAsPrevious": null,
+      "promptCache": "omitted",
+      "systemCacheSections": 2,
+      "model": "meta/muse-spark-1.3-contributor",
+      "status": 200,
+      "finishAtMs": 10729,
+      "usage": {
+        "inputTokens": 857,
+        "outputTokens": 579,
+        "inputTokenDetails": {
+          "noCacheTokens": 744,
+          "cacheReadTokens": 113
+        }
+      }
+    },
+    {
+      "atMs": 10821,
+      "incoming": {
+        "metadataFormat": "json",
+        "metadataKeys": [
+          "device_id",
+          "account_uuid",
+          "session_id"
+        ],
+        "uuidSession": true,
+        "sameHintAsPrevious": true,
+        "sessionHeaderNames": [
+          "x-claude-code-session-id"
+        ]
+      },
+      "nativeText": [],
+      "nativeTool": [
+        {
+          "atMs": 13778,
+          "chars": 24
+        }
+      ],
+      "bridgeText": [],
+      "bridgeTool": [
+        {
+          "atMs": 13778,
+          "chars": 24
+        }
+      ],
+      "sameSessionAsPrevious": true,
+      "traceparentPresent": true,
+      "tracePrefix": "0b4dc874",
+      "sameTraceAsPrevious": true,
+      "differentSpanFromPrevious": true,
+      "samePrefixAsPrevious": true,
+      "sameThreadAsPrevious": true,
+      "promptCache": "omitted",
+      "systemCacheSections": 2,
+      "model": "meta/muse-spark-1.3-contributor",
+      "status": 200,
+      "finishAtMs": 13780,
+      "usage": {
+        "inputTokens": 1251,
+        "outputTokens": 106,
+        "inputTokenDetails": {
+          "noCacheTokens": 1138,
+          "cacheReadTokens": 113
+        }
+      }
+    },
+    {
+      "atMs": 13814,
+      "incoming": {
+        "metadataFormat": "json",
+        "metadataKeys": [
+          "device_id",
+          "account_uuid",
+          "session_id"
+        ],
+        "uuidSession": true,
+        "sameHintAsPrevious": true,
+        "sessionHeaderNames": [
+          "x-claude-code-session-id"
+        ]
+      },
+      "nativeText": [
+        {
+          "atMs": 18064,
+          "chars": 6
+        },
+        {
+          "atMs": 18121,
+          "chars": 6
+        },
+        {
+          "atMs": 18131,
+          "chars": 10
+        },
+        {
+          "atMs": 18134,
+          "chars": 11
+        },
+        {
+          "atMs": 18195,
+          "chars": 16
+        },
+        {
+          "atMs": 18509,
+          "chars": 23
+        },
+        {
+          "atMs": 18510,
+          "chars": 5
+        },
+        {
+          "atMs": 18514,
+          "chars": 17
+        },
+        {
+          "atMs": 18520,
+          "chars": 11
+        },
+        {
+          "atMs": 18521,
+          "chars": 18
+        },
+        {
+          "atMs": 18546,
+          "chars": 9
+        },
+        {
+          "atMs": 18546,
+          "chars": 30
+        },
+        {
+          "atMs": 18547,
+          "chars": 15
+        },
+        {
+          "atMs": 18664,
+          "chars": 6
+        },
+        {
+          "atMs": 18671,
+          "chars": 41
+        },
+        {
+          "atMs": 18671,
+          "chars": 8
+        },
+        {
+          "atMs": 18671,
+          "chars": 42
+        },
+        {
+          "atMs": 18672,
+          "chars": 5
+        },
+        {
+          "atMs": 18864,
+          "chars": 12
+        },
+        {
+          "atMs": 18865,
+          "chars": 33
+        },
+        {
+          "atMs": 18866,
+          "chars": 30
+        },
+        {
+          "atMs": 18947,
+          "chars": 10
+        },
+        {
+          "atMs": 19113,
+          "chars": 7
+        },
+        {
+          "atMs": 19114,
+          "chars": 10
+        },
+        {
+          "atMs": 19114,
+          "chars": 27
+        },
+        {
+          "atMs": 19115,
+          "chars": 21
+        },
+        {
+          "atMs": 19116,
+          "chars": 10
+        },
+        {
+          "atMs": 19118,
+          "chars": 18
+        },
+        {
+          "atMs": 19245,
+          "chars": 4
+        },
+        {
+          "atMs": 19373,
+          "chars": 2
+        },
+        {
+          "atMs": 19391,
+          "chars": 19
+        },
+        {
+          "atMs": 19433,
+          "chars": 21
+        },
+        {
+          "atMs": 19438,
+          "chars": 12
+        },
+        {
+          "atMs": 19486,
+          "chars": 5
+        },
+        {
+          "atMs": 19494,
+          "chars": 8
+        },
+        {
+          "atMs": 19563,
+          "chars": 17
+        },
+        {
+          "atMs": 19686,
+          "chars": 2
+        },
+        {
+          "atMs": 19697,
+          "chars": 13
+        },
+        {
+          "atMs": 20142,
+          "chars": 13
+        },
+        {
+          "atMs": 20143,
+          "chars": 37
+        },
+        {
+          "atMs": 20143,
+          "chars": 6
+        },
+        {
+          "atMs": 20143,
+          "chars": 19
+        },
+        {
+          "atMs": 20143,
+          "chars": 2
+        },
+        {
+          "atMs": 20144,
+          "chars": 11
+        },
+        {
+          "atMs": 20145,
+          "chars": 7
+        },
+        {
+          "atMs": 20145,
+          "chars": 38
+        },
+        {
+          "atMs": 20145,
+          "chars": 17
+        },
+        {
+          "atMs": 20145,
+          "chars": 7
+        },
+        {
+          "atMs": 20145,
+          "chars": 10
+        },
+        {
+          "atMs": 20162,
+          "chars": 8
+        },
+        {
+          "atMs": 20626,
+          "chars": 12
+        },
+        {
+          "atMs": 20694,
+          "chars": 43
+        },
+        {
+          "atMs": 20705,
+          "chars": 15
+        },
+        {
+          "atMs": 21020,
+          "chars": 8
+        },
+        {
+          "atMs": 21020,
+          "chars": 22
+        },
+        {
+          "atMs": 21021,
+          "chars": 17
+        },
+        {
+          "atMs": 21022,
+          "chars": 12
+        },
+        {
+          "atMs": 21022,
+          "chars": 5
+        },
+        {
+          "atMs": 21023,
+          "chars": 10
+        },
+        {
+          "atMs": 21023,
+          "chars": 17
+        },
+        {
+          "atMs": 21023,
+          "chars": 9
+        },
+        {
+          "atMs": 21023,
+          "chars": 13
+        },
+        {
+          "atMs": 21023,
+          "chars": 7
+        },
+        {
+          "atMs": 21024,
+          "chars": 10
+        },
+        {
+          "atMs": 21024,
+          "chars": 31
+        },
+        {
+          "atMs": 21024,
+          "chars": 3
+        },
+        {
+          "atMs": 21024,
+          "chars": 10
+        },
+        {
+          "atMs": 21073,
+          "chars": 19
+        },
+        {
+          "atMs": 21145,
+          "chars": 4
+        },
+        {
+          "atMs": 21208,
+          "chars": 18
+        },
+        {
+          "atMs": 21276,
+          "chars": 15
+        },
+        {
+          "atMs": 21363,
+          "chars": 8
+        },
+        {
+          "atMs": 21369,
+          "chars": 16
+        },
+        {
+          "atMs": 21408,
+          "chars": 6
+        },
+        {
+          "atMs": 21594,
+          "chars": 27
+        },
+        {
+          "atMs": 21614,
+          "chars": 15
+        },
+        {
+          "atMs": 21614,
+          "chars": 23
+        },
+        {
+          "atMs": 21888,
+          "chars": 14
+        },
+        {
+          "atMs": 21888,
+          "chars": 31
+        },
+        {
+          "atMs": 21893,
+          "chars": 16
+        },
+        {
+          "atMs": 21893,
+          "chars": 5
+        },
+        {
+          "atMs": 21893,
+          "chars": 26
+        },
+        {
+          "atMs": 21893,
+          "chars": 46
+        },
+        {
+          "atMs": 21893,
+          "chars": 41
+        },
+        {
+          "atMs": 22064,
+          "chars": 20
+        },
+        {
+          "atMs": 22065,
+          "chars": 10
+        },
+        {
+          "atMs": 22065,
+          "chars": 27
+        },
+        {
+          "atMs": 22065,
+          "chars": 4
+        },
+        {
+          "atMs": 22103,
+          "chars": 24
+        }
+      ],
+      "nativeTool": [],
+      "bridgeText": [
+        {
+          "atMs": 18064,
+          "chars": 6
+        },
+        {
+          "atMs": 18122,
+          "chars": 6
+        },
+        {
+          "atMs": 18131,
+          "chars": 10
+        },
+        {
+          "atMs": 18135,
+          "chars": 11
+        },
+        {
+          "atMs": 18195,
+          "chars": 16
+        },
+        {
+          "atMs": 18509,
+          "chars": 23
+        },
+        {
+          "atMs": 18510,
+          "chars": 5
+        },
+        {
+          "atMs": 18515,
+          "chars": 17
+        },
+        {
+          "atMs": 18520,
+          "chars": 11
+        },
+        {
+          "atMs": 18521,
+          "chars": 18
+        },
+        {
+          "atMs": 18546,
+          "chars": 9
+        },
+        {
+          "atMs": 18546,
+          "chars": 30
+        },
+        {
+          "atMs": 18547,
+          "chars": 15
+        },
+        {
+          "atMs": 18664,
+          "chars": 6
+        },
+        {
+          "atMs": 18671,
+          "chars": 41
+        },
+        {
+          "atMs": 18671,
+          "chars": 8
+        },
+        {
+          "atMs": 18671,
+          "chars": 42
+        },
+        {
+          "atMs": 18672,
+          "chars": 5
+        },
+        {
+          "atMs": 18865,
+          "chars": 12
+        },
+        {
+          "atMs": 18865,
+          "chars": 33
+        },
+        {
+          "atMs": 18866,
+          "chars": 30
+        },
+        {
+          "atMs": 18948,
+          "chars": 10
+        },
+        {
+          "atMs": 19114,
+          "chars": 7
+        },
+        {
+          "atMs": 19114,
+          "chars": 10
+        },
+        {
+          "atMs": 19114,
+          "chars": 27
+        },
+        {
+          "atMs": 19115,
+          "chars": 21
+        },
+        {
+          "atMs": 19116,
+          "chars": 10
+        },
+        {
+          "atMs": 19118,
+          "chars": 18
+        },
+        {
+          "atMs": 19245,
+          "chars": 4
+        },
+        {
+          "atMs": 19373,
+          "chars": 2
+        },
+        {
+          "atMs": 19392,
+          "chars": 19
+        },
+        {
+          "atMs": 19433,
+          "chars": 21
+        },
+        {
+          "atMs": 19438,
+          "chars": 12
+        },
+        {
+          "atMs": 19486,
+          "chars": 5
+        },
+        {
+          "atMs": 19494,
+          "chars": 8
+        },
+        {
+          "atMs": 19563,
+          "chars": 17
+        },
+        {
+          "atMs": 19686,
+          "chars": 2
+        },
+        {
+          "atMs": 19697,
+          "chars": 13
+        },
+        {
+          "atMs": 20142,
+          "chars": 13
+        },
+        {
+          "atMs": 20143,
+          "chars": 37
+        },
+        {
+          "atMs": 20143,
+          "chars": 6
+        },
+        {
+          "atMs": 20144,
+          "chars": 19
+        },
+        {
+          "atMs": 20144,
+          "chars": 2
+        },
+        {
+          "atMs": 20144,
+          "chars": 11
+        },
+        {
+          "atMs": 20145,
+          "chars": 7
+        },
+        {
+          "atMs": 20145,
+          "chars": 38
+        },
+        {
+          "atMs": 20145,
+          "chars": 17
+        },
+        {
+          "atMs": 20145,
+          "chars": 7
+        },
+        {
+          "atMs": 20146,
+          "chars": 10
+        },
+        {
+          "atMs": 20162,
+          "chars": 8
+        },
+        {
+          "atMs": 20626,
+          "chars": 12
+        },
+        {
+          "atMs": 20694,
+          "chars": 43
+        },
+        {
+          "atMs": 20706,
+          "chars": 15
+        },
+        {
+          "atMs": 21020,
+          "chars": 8
+        },
+        {
+          "atMs": 21021,
+          "chars": 22
+        },
+        {
+          "atMs": 21021,
+          "chars": 17
+        },
+        {
+          "atMs": 21022,
+          "chars": 12
+        },
+        {
+          "atMs": 21022,
+          "chars": 5
+        },
+        {
+          "atMs": 21023,
+          "chars": 10
+        },
+        {
+          "atMs": 21023,
+          "chars": 17
+        },
+        {
+          "atMs": 21023,
+          "chars": 9
+        },
+        {
+          "atMs": 21023,
+          "chars": 13
+        },
+        {
+          "atMs": 21023,
+          "chars": 7
+        },
+        {
+          "atMs": 21024,
+          "chars": 10
+        },
+        {
+          "atMs": 21024,
+          "chars": 31
+        },
+        {
+          "atMs": 21024,
+          "chars": 3
+        },
+        {
+          "atMs": 21024,
+          "chars": 10
+        },
+        {
+          "atMs": 21073,
+          "chars": 19
+        },
+        {
+          "atMs": 21145,
+          "chars": 4
+        },
+        {
+          "atMs": 21208,
+          "chars": 18
+        },
+        {
+          "atMs": 21276,
+          "chars": 15
+        },
+        {
+          "atMs": 21363,
+          "chars": 8
+        },
+        {
+          "atMs": 21369,
+          "chars": 16
+        },
+        {
+          "atMs": 21408,
+          "chars": 6
+        },
+        {
+          "atMs": 21595,
+          "chars": 27
+        },
+        {
+          "atMs": 21614,
+          "chars": 15
+        },
+        {
+          "atMs": 21614,
+          "chars": 23
+        },
+        {
+          "atMs": 21888,
+          "chars": 14
+        },
+        {
+          "atMs": 21888,
+          "chars": 31
+        },
+        {
+          "atMs": 21893,
+          "chars": 16
+        },
+        {
+          "atMs": 21893,
+          "chars": 5
+        },
+        {
+          "atMs": 21893,
+          "chars": 26
+        },
+        {
+          "atMs": 21893,
+          "chars": 46
+        },
+        {
+          "atMs": 21893,
+          "chars": 41
+        },
+        {
+          "atMs": 22064,
+          "chars": 20
+        },
+        {
+          "atMs": 22065,
+          "chars": 10
+        },
+        {
+          "atMs": 22065,
+          "chars": 27
+        },
+        {
+          "atMs": 22066,
+          "chars": 4
+        },
+        {
+          "atMs": 22103,
+          "chars": 24
+        }
+      ],
+      "bridgeTool": [],
+      "sameSessionAsPrevious": true,
+      "traceparentPresent": true,
+      "tracePrefix": "0b4dc874",
+      "sameTraceAsPrevious": true,
+      "differentSpanFromPrevious": true,
+      "samePrefixAsPrevious": true,
+      "sameThreadAsPrevious": true,
+      "promptCache": "omitted",
+      "systemCacheSections": 2,
+      "model": "meta/muse-spark-1.3-contributor",
+      "status": 200,
+      "finishAtMs": 22206,
+      "usage": {
+        "inputTokens": 2073,
+        "outputTokens": 584,
+        "inputTokenDetails": {
+          "noCacheTokens": 936,
+          "cacheReadTokens": 1137
+        }
+      }
+    }
+  ],
+  "cliText": [
+    {
+      "atMs": 18066,
+      "chars": 6
+    },
+    {
+      "atMs": 18123,
+      "chars": 6
+    },
+    {
+      "atMs": 18136,
+      "chars": 10
+    },
+    {
+      "atMs": 18137,
+      "chars": 11
+    },
+    {
+      "atMs": 18197,
+      "chars": 16
+    },
+    {
+      "atMs": 18511,
+      "chars": 23
+    },
+    {
+      "atMs": 18512,
+      "chars": 5
+    },
+    {
+      "atMs": 18516,
+      "chars": 17
+    },
+    {
+      "atMs": 18521,
+      "chars": 11
+    },
+    {
+      "atMs": 18522,
+      "chars": 18
+    },
+    {
+      "atMs": 18548,
+      "chars": 9
+    },
+    {
+      "atMs": 18548,
+      "chars": 30
+    },
+    {
+      "atMs": 18548,
+      "chars": 15
+    },
+    {
+      "atMs": 18665,
+      "chars": 6
+    },
+    {
+      "atMs": 18672,
+      "chars": 41
+    },
+    {
+      "atMs": 18672,
+      "chars": 8
+    },
+    {
+      "atMs": 18672,
+      "chars": 42
+    },
+    {
+      "atMs": 18673,
+      "chars": 5
+    },
+    {
+      "atMs": 18866,
+      "chars": 12
+    },
+    {
+      "atMs": 18866,
+      "chars": 33
+    },
+    {
+      "atMs": 18867,
+      "chars": 30
+    },
+    {
+      "atMs": 18949,
+      "chars": 10
+    },
+    {
+      "atMs": 19118,
+      "chars": 7
+    },
+    {
+      "atMs": 19118,
+      "chars": 10
+    },
+    {
+      "atMs": 19118,
+      "chars": 27
+    },
+    {
+      "atMs": 19118,
+      "chars": 21
+    },
+    {
+      "atMs": 19118,
+      "chars": 10
+    },
+    {
+      "atMs": 19119,
+      "chars": 18
+    },
+    {
+      "atMs": 19247,
+      "chars": 4
+    },
+    {
+      "atMs": 19375,
+      "chars": 2
+    },
+    {
+      "atMs": 19393,
+      "chars": 19
+    },
+    {
+      "atMs": 19435,
+      "chars": 21
+    },
+    {
+      "atMs": 19439,
+      "chars": 12
+    },
+    {
+      "atMs": 19488,
+      "chars": 5
+    },
+    {
+      "atMs": 19495,
+      "chars": 8
+    },
+    {
+      "atMs": 19565,
+      "chars": 17
+    },
+    {
+      "atMs": 19688,
+      "chars": 2
+    },
+    {
+      "atMs": 19698,
+      "chars": 13
+    },
+    {
+      "atMs": 20146,
+      "chars": 13
+    },
+    {
+      "atMs": 20146,
+      "chars": 37
+    },
+    {
+      "atMs": 20146,
+      "chars": 6
+    },
+    {
+      "atMs": 20146,
+      "chars": 19
+    },
+    {
+      "atMs": 20146,
+      "chars": 2
+    },
+    {
+      "atMs": 20146,
+      "chars": 11
+    },
+    {
+      "atMs": 20146,
+      "chars": 7
+    },
+    {
+      "atMs": 20146,
+      "chars": 38
+    },
+    {
+      "atMs": 20146,
+      "chars": 17
+    },
+    {
+      "atMs": 20146,
+      "chars": 7
+    },
+    {
+      "atMs": 20147,
+      "chars": 10
+    },
+    {
+      "atMs": 20164,
+      "chars": 8
+    },
+    {
+      "atMs": 20628,
+      "chars": 12
+    },
+    {
+      "atMs": 20696,
+      "chars": 43
+    },
+    {
+      "atMs": 20707,
+      "chars": 15
+    },
+    {
+      "atMs": 21025,
+      "chars": 8
+    },
+    {
+      "atMs": 21025,
+      "chars": 22
+    },
+    {
+      "atMs": 21025,
+      "chars": 17
+    },
+    {
+      "atMs": 21025,
+      "chars": 12
+    },
+    {
+      "atMs": 21025,
+      "chars": 5
+    },
+    {
+      "atMs": 21025,
+      "chars": 10
+    },
+    {
+      "atMs": 21026,
+      "chars": 17
+    },
+    {
+      "atMs": 21026,
+      "chars": 9
+    },
+    {
+      "atMs": 21027,
+      "chars": 13
+    },
+    {
+      "atMs": 21027,
+      "chars": 7
+    },
+    {
+      "atMs": 21027,
+      "chars": 10
+    },
+    {
+      "atMs": 21028,
+      "chars": 31
+    },
+    {
+      "atMs": 21028,
+      "chars": 3
+    },
+    {
+      "atMs": 21028,
+      "chars": 10
+    },
+    {
+      "atMs": 21074,
+      "chars": 19
+    },
+    {
+      "atMs": 21159,
+      "chars": 4
+    },
+    {
+      "atMs": 21209,
+      "chars": 18
+    },
+    {
+      "atMs": 21278,
+      "chars": 15
+    },
+    {
+      "atMs": 21368,
+      "chars": 8
+    },
+    {
+      "atMs": 21370,
+      "chars": 16
+    },
+    {
+      "atMs": 21410,
+      "chars": 6
+    },
+    {
+      "atMs": 21596,
+      "chars": 27
+    },
+    {
+      "atMs": 21616,
+      "chars": 15
+    },
+    {
+      "atMs": 21616,
+      "chars": 23
+    },
+    {
+      "atMs": 21889,
+      "chars": 14
+    },
+    {
+      "atMs": 21889,
+      "chars": 31
+    },
+    {
+      "atMs": 21894,
+      "chars": 16
+    },
+    {
+      "atMs": 21894,
+      "chars": 5
+    },
+    {
+      "atMs": 21895,
+      "chars": 26
+    },
+    {
+      "atMs": 21895,
+      "chars": 46
+    },
+    {
+      "atMs": 21895,
+      "chars": 41
+    },
+    {
+      "atMs": 22066,
+      "chars": 20
+    },
+    {
+      "atMs": 22067,
+      "chars": 10
+    },
+    {
+      "atMs": 22067,
+      "chars": 27
+    },
+    {
+      "atMs": 22067,
+      "chars": 4
+    },
+    {
+      "atMs": 22104,
+      "chars": 24
+    }
+  ],
+  "errors": [
+    "not_found"
+  ],
+  "bridgeMetrics": [
+    {
+      "publicModel": "claude-Opus-muse",
+      "upstreamModel": "meta/muse-spark-1.3-contributor",
+      "requestedEffort": "low",
+      "upstreamEffort": "low",
+      "accountFingerprint": "154c5a419e33",
+      "requestBytes": 2089,
+      "tools": 1,
+      "conversationBound": true,
+      "stream": true,
+      "samePrefixAsPrevious": null,
+      "textDeltas": 0,
+      "firstTextMs": null,
+      "lastTextMs": null,
+      "upstreamReadyMs": 1022,
+      "firstContentMs": 6248,
+      "inputTokens": 857,
+      "outputTokens": 579,
+      "reasoningTokens": 484,
+      "cacheReadTokens": 113,
+      "cacheWriteTokens": null,
+      "uncachedInputTokens": 744
+    },
+    {
+      "publicModel": "claude-Opus-muse",
+      "upstreamModel": "meta/muse-spark-1.3-contributor",
+      "requestedEffort": "low",
+      "upstreamEffort": "low",
+      "accountFingerprint": "154c5a419e33",
+      "requestBytes": 3703,
+      "tools": 1,
+      "conversationBound": true,
+      "stream": true,
+      "samePrefixAsPrevious": true,
+      "textDeltas": 0,
+      "firstTextMs": null,
+      "lastTextMs": null,
+      "upstreamReadyMs": 709,
+      "inputTokens": 1251,
+      "outputTokens": 106,
+      "reasoningTokens": 31,
+      "cacheReadTokens": 113,
+      "cacheWriteTokens": null,
+      "uncachedInputTokens": 1138
+    },
+    {
+      "publicModel": "claude-Opus-muse",
+      "upstreamModel": "meta/muse-spark-1.3-contributor",
+      "requestedEffort": "low",
+      "upstreamEffort": "low",
+      "accountFingerprint": "154c5a419e33",
+      "requestBytes": 6725,
+      "tools": 1,
+      "conversationBound": true,
+      "stream": true,
+      "samePrefixAsPrevious": true,
+      "textDeltas": 89,
+      "firstTextMs": 4252,
+      "lastTextMs": 8291,
+      "upstreamReadyMs": 372,
+      "firstContentMs": 4252,
+      "inputTokens": 2073,
+      "outputTokens": 584,
+      "reasoningTokens": 267,
+      "cacheReadTokens": 1137,
+      "cacheWriteTokens": null,
+      "uncachedInputTokens": 936
+    }
+  ],
+  "clientIsError": false,
+  "finalMarker": true,
+  "exitCode": 0,
+  "passed": true
+}

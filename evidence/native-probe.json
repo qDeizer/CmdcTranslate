@@ -1,0 +1,15 @@
+{
+  "provenance": "Sanitized summary of a live synthetic request observed during implementation; not a raw capture",
+  "date": "2026-09-15",
+  "upstreamModel": "meta/muse-spark-1.3-contributor",
+  "endpoint": "https://api.commandcode.ai/alpha/generate",
+  "request": {"reasoning_effort": "high", "max_tokens": 4096, "declaredTools": ["read_file"]},
+  "httpStatus": 200,
+  "reasoningDeltaCharacters": 86,
+  "signaturePresentOnReasoningEvents": false,
+  "toolArgumentDeltaCharacters": 60,
+  "terminal": "tool_calls",
+  "usage": {"inputTokens": 7842, "outputTokens": 579, "cacheReadTokens": 113, "reasoningTokens": 483},
+  "tail": ["finish-step", "finish", "provider-metadata", "EOF"],
+  "payloadStored": false
+}
