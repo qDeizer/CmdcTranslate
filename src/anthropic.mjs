@@ -77,7 +77,17 @@ export function decodeAnthropic(body, context, profile) {
     fields(m, ['role', 'content'], 'messages');
     // Claude Code 2.1.272 also sends a text system message in the messages array.
     ensure(['user', 'assistant', 'system'].includes(m.role), 'invalid_role');
-    return { role: m.role, parts: content(m.content, m.role) };
+    const parts = content(m.content, m.role);
+    // Presentation boundaries must not accumulate in the next native prompt.
+    if (context.paragraphBlocks && m.role === 'assistant') {
+      const merged = [];
+      for (const part of parts) {
+        if (part.type === 'text' && merged.at(-1)?.type === 'text') merged.at(-1).text += part.text;
+        else merged.push(part);
+      }
+      return { role: m.role, parts: merged };
+    }
+    return { role: m.role, parts };
   });
   const tools = array(body.tools ?? [], 'tools').map(t => {
     fields(t, ['name', 'description', 'input_schema', 'cache_control'], 'tools');
@@ -91,7 +101,7 @@ export function decodeAnthropic(body, context, profile) {
     temperature: body.temperature, reasoningEffort, metadata: {} }, profile);
 }
 
-export function createAnthropicEncoder(turn, profile) {
+export function createAnthropicEncoder(turn, profile, paragraphBlocks = false) {
   const id = 'msg_' + randomUUID().replaceAll('-', '');
   const blocks = new Map(), calls = new Map(), content = [];
   let started = false, terminal = false, completed = false, usage = null, reason = null;
@@ -115,16 +125,42 @@ export function createAnthropicEncoder(turn, profile) {
         if (e.kind === 'reasoning') ensure(profile && modelFor(profile, turn.publicModel).reasoningText === 'verified', 'unsupported_reasoning_output', 502);
         ensure(!blocks.has(key), 'duplicate_block', 502);
         const index = content.length, block = e.kind === 'reasoning' ? { type: 'thinking', thinking: '' } : { type: 'text', text: '' };
-        content.push(block); blocks.set(key, { index, block, kind: e.kind, closed: false });
+        content.push(block); blocks.set(key, { index, block, kind: e.kind, closed: false, ended: false, line: '', fence: null, hasText: false });
         return [{ type: 'content_block_start', index, content_block: structuredClone(block) }];
       }
       if (e.type === 'block-delta' || e.type === 'block-end') {
         const block = blocks.get(key);
-        ensure(block && !block.closed, 'orphan_block_event', 502);
-        if (e.type === 'block-end') return close(block);
+        ensure(block && !block.ended, 'orphan_block_event', 502);
+        if (e.type === 'block-end') { block.ended = true; return close(block); }
         if (block.kind === 'reasoning') {
           block.block.thinking += e.text;
           return [{ type: 'content_block_delta', index: block.index, delta: { type: 'thinking_delta', thinking: e.text } }];
+        }
+        if (paragraphBlocks && turn.stream) {
+          const output = [];
+          for (const piece of e.text.match(/[^\n]*\n|[^\n]+$/g) ?? []) {
+            if (block.closed) {
+              block.index = content.length; block.block = { type: 'text', text: '' };
+              block.closed = false; block.hasText = false; content.push(block.block);
+              output.push({ type: 'content_block_start', index: block.index, content_block: { ...block.block } });
+            }
+            block.block.text += piece; block.line += piece;
+            block.hasText ||= /\S/.test(piece);
+            output.push({ type: 'content_block_delta', index: block.index, delta: { type: 'text_delta', text: piece } });
+            if (!piece.endsWith('\n')) continue;
+            // Keep fenced Markdown intact, including fences divided across native deltas.
+            const line = block.line.replace(/\r?\n$/, ''); block.line = '';
+            const fence = /^ {0,3}(`{3,}|~{3,})(.*)$/.exec(line);
+            if (fence) {
+              if (!block.fence) block.fence = fence[1];
+              else if (fence[1][0] === block.fence[0] && fence[1].length >= block.fence.length && !fence[2].trim()) block.fence = null;
+            }
+            // A paragraph end is a presentation boundary, never a message/tool completion.
+            if (!line.trim() && !block.fence && block.hasText &&
+                ![...blocks.values()].some(other => other !== block && !other.ended) &&
+                ![...calls.values()].some(call => !call.closed)) output.push(...close(block));
+          }
+          return output;
         }
         block.block.text += e.text;
         return [{ type: 'content_block_delta', index: block.index, delta: { type: 'text_delta', text: e.text } }];

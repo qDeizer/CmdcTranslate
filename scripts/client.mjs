@@ -23,7 +23,8 @@ export async function clientSettings(client, base, token, home, profile) {
     const settings = { availableModels: Object.keys(profile.models),
       modelPicker: { replaceBuiltInOptions: true, options: Object.entries(profile.models).map(([model, route]) =>
         ({ model, label: model, description: 'Command Code: ' + route.upstreamModel })) }, env: {
-      ANTHROPIC_BASE_URL: base, ANTHROPIC_API_KEY: token, ANTHROPIC_AUTH_TOKEN: '',
+      ANTHROPIC_BASE_URL: base, ANTHROPIC_API_KEY: token,
+      ...(process.platform === 'win32' ? { ANTHROPIC_CUSTOM_HEADERS: 'x-astra-text-blocks: paragraphs' } : {}),
       ANTHROPIC_MODEL: models.claude, CLAUDE_CODE_DISABLE_THINKING: '1',
       ANTHROPIC_DEFAULT_MODEL: models.claude,
       ANTHROPIC_DEFAULT_OPUS_MODEL: models.claude, ANTHROPIC_DEFAULT_SONNET_MODEL: models.claude,

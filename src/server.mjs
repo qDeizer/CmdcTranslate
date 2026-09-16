@@ -221,7 +221,8 @@ export function makeServer(profile, credentials, options = {}) {
         conversationHint: header(req, 'x-astra-conversation-id') ?? header(req, protocol === 'anthropic' ? 'x-claude-code-session-id' : 'thread-id')
           ?? (protocol === 'anthropic' ? claudeConversationHint(body) : undefined),
         agentHint: header(req, 'x-astra-agent-id') ?? header(req, 'x-claude-code-agent-id'),
-        anthropicVersion: header(req, 'anthropic-version'), anthropicBeta: req.headers['anthropic-beta'] };
+        anthropicVersion: header(req, 'anthropic-version'), anthropicBeta: req.headers['anthropic-beta'],
+        paragraphBlocks: protocol === 'anthropic' && header(req, 'x-astra-text-blocks') === 'paragraphs' };
       const turn = protocol === 'anthropic' ? decodeAnthropic(body, context, profile) : decodeResponses(body, context, profile);
       lease = sessions.acquire(context);
       const actual = compileNative(turn, profile, lease.identity, credentials);
@@ -234,7 +235,7 @@ export function makeServer(profile, credentials, options = {}) {
         samePrefixAsPrevious: lease.observePrefix({ model: actual.body.params.model, config: actual.body.config,
           system: actual.body.params.system, tools: actual.body.params.tools }), textDeltas: 0,
         firstTextMs: null, lastTextMs: null, toolDeltas: 0, firstToolMs: null, lastToolMs: null };
-      encoder = protocol === 'anthropic' ? createAnthropicEncoder(turn, profile) : createResponsesEncoder(turn, profile);
+      encoder = protocol === 'anthropic' ? createAnthropicEncoder(turn, profile, context.paragraphBlocks) : createResponsesEncoder(turn, profile);
       let pending = encoder.start(), pendingBytes = 0, committed = false, preludeDeadline, lastWrite = Date.now();
       const write = async events => {
         for (const e of events) await writeFrame(res, sse(e), abort.signal, profile.timeouts.downstreamStallMs);

@@ -107,6 +107,9 @@ test('saved aliases drive Claude settings and the generated Codex catalog', asyn
     assert.deepEqual(settings.availableModels, Object.keys(profile.models));
     assert.equal(claude.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE, '1');
     assert.equal(settings.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE, '1');
+    assert.equal(claude.env.ANTHROPIC_AUTH_TOKEN, undefined);
+    assert.equal(claude.env.ANTHROPIC_API_KEY, credentials.gatewayToken);
+    if (process.platform === 'win32') assert.equal(settings.env.ANTHROPIC_CUSTOM_HEADERS, 'x-astra-text-blocks: paragraphs');
     const codex = await clientSettings('codex', 'http://127.0.0.1:8742', credentials.gatewayToken, codexHome, profile);
     assert.deepEqual(codex.args.slice(0, 2), ['-m', 'codex-custom']);
     const catalog = JSON.parse(await readFile(join(codexHome, 'models.json'), 'utf8'));

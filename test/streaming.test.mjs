@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { withBridge, parseSse, usage, writeNative } from './helper.mjs';
+import { createAnthropicEncoder } from '../src/anthropic.mjs';
 
 const nativeTool = (id, name, delta, input, extra = {}) => [
   { type: 'tool-input-start', id, toolName: name, ...extra },
@@ -9,6 +10,54 @@ const nativeTool = (id, name, delta, input, extra = {}) => [
   { type: 'tool-call', toolCallId: id, toolName: name, input, ...extra },
 ];
 const finish = reason => ({ type: 'finish', finishReason: reason, totalUsage: usage });
+
+test('Windows Claude receives a completed paragraph before native text ends; follow-up text is rejoined', async () => {
+  let release, ended = false;
+  const gate = new Promise(resolve => { release = resolve; });
+  const headers = { 'x-astra-text-blocks': 'paragraphs' };
+  const first = 'İlk paragraf 🌿.\r\n\r\n', second = 'Son paragraf.';
+  await withBridge(async (_req, res, calls) => {
+    if (calls.length > 1) return writeNative(res, [{ type: 'text-start', id: 't2' }, { type: 'text-delta', id: 't2', text: 'tamam' }, { type: 'text-end', id: 't2' }, finish('stop')]);
+    res.writeHead(200, { 'content-type': 'application/x-ndjson' });
+    res.write([{ type: 'text-start', id: 't' }, { type: 'text-delta', id: 't', text: first }].map(JSON.stringify).join('\n') + '\n');
+    await gate; ended = true;
+    res.end([{ type: 'text-delta', id: 't', text: second }, { type: 'text-end', id: 't' }, finish('stop')].map(JSON.stringify).join('\n') + '\n');
+  }, async ({ send, calls }) => {
+    try {
+      const state = await readUntil(await send('anthropic', { stream: true }, { headers }), e => e.type === 'content_block_stop');
+      assert.equal(ended, false);
+      assert.equal(state.all.some(e => e.type === 'message_stop'), false);
+      release();
+      const events = await finishReading(state);
+      const parts = events.filter(e => e.type === 'content_block_start').map(e => ({ ...e.content_block }));
+      for (const event of events.filter(e => e.delta?.type === 'text_delta')) parts[event.index].text += event.delta.text;
+      assert.deepEqual(parts.map(p => p.text), [first, second]);
+      assert.equal(events.at(-1).type, 'message_stop');
+      const reply = await send('anthropic', { messages: [{ role: 'assistant', content: parts }, { role: 'user', content: 'continue' }] }, { headers });
+      assert.equal(reply.status, 200); await reply.text();
+      assert.deepEqual(calls[1].body.params.messages[0].content, [{ type: 'text', text: first + second }]);
+    } finally { release(); }
+  });
+});
+
+test('paragraph framing preserves code fences and every character across delta boundaries', () => {
+  const text = 'Önce 🌿.\n\n```js\nconst a = 1;\n\nconst b = 2;\n```\n\nSon.\n\n';
+  for (const width of [1, 2, 7, text.length]) {
+    const encoder = createAnthropicEncoder({ publicModel: 'test', stream: true }, null, true);
+    const events = encoder.start();
+    events.push(...encoder.push({ type: 'block-start', kind: 'text', segment: 0, blockId: 't' }));
+    for (let i = 0; i < text.length; i += width) events.push(...encoder.push({ type: 'block-delta', segment: 0, blockId: 't', text: text.slice(i, i + width) }));
+    events.push(...encoder.push({ type: 'block-end', segment: 0, blockId: 't' }));
+    const parts = events.filter(e => e.type === 'content_block_start').map(() => '');
+    for (const e of events.filter(e => e.delta?.type === 'text_delta')) parts[e.index] += e.delta.text;
+    assert.deepEqual(parts, ['Önce 🌿.\n\n', '```js\nconst a = 1;\n\nconst b = 2;\n```\n\n', 'Son.\n\n']);
+    assert.equal(parts.join(''), text);
+    assert.equal(events.filter(e => e.type === 'content_block_stop').length, 3);
+    assert.equal(events.some(e => e.type === 'message_stop'), false);
+    assert.equal(encoder.fail(new Error()).at(-1).type, 'error');
+    assert.throws(() => encoder.result());
+  }
+});
 
 function requestTools(protocol) {
   return protocol === 'anthropic'
