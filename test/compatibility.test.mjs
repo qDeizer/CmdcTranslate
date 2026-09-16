@@ -105,6 +105,8 @@ test('saved aliases drive Claude settings and the generated Codex catalog', asyn
     assert.equal(settings.modelPicker.replaceBuiltInOptions, true);
     assert.deepEqual(settings.modelPicker.options.map(row => row.model), Object.keys(profile.models));
     assert.deepEqual(settings.availableModels, Object.keys(profile.models));
+    assert.equal(claude.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE, '1');
+    assert.equal(settings.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE, '1');
     const codex = await clientSettings('codex', 'http://127.0.0.1:8742', credentials.gatewayToken, codexHome, profile);
     assert.deepEqual(codex.args.slice(0, 2), ['-m', 'codex-custom']);
     const catalog = JSON.parse(await readFile(join(codexHome, 'models.json'), 'utf8'));

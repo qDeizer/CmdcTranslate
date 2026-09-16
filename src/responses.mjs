@@ -122,7 +122,7 @@ export function decodeResponses(body, context, profile) {
 
 export function createResponsesEncoder(turn, profile) {
   const id = 'resp_' + randomUUID().replaceAll('-', ''), created = Math.floor(Date.now() / 1000);
-  const items = [], blocks = new Map();
+  const items = [], blocks = new Map(), calls = new Map();
   let sequence = 0, started = false, terminal = false, completed = false, usage = null, status = 'in_progress', failure = null, incomplete = null;
   const emit = (type, value) => ({ type, ...structuredClone(value), sequence_number: sequence++ });
   const response = () => ({ id, object: 'response', created_at: created, status, model: turn.publicModel,
@@ -178,6 +178,20 @@ export function createResponsesEncoder(turn, profile) {
         block.item.content[0].text += e.text;
         return [emit('response.output_text.delta', { ...common, content_index: 0, logprobs: [] })];
       }
+      if (e.type === 'tool-start') {
+        ensure(!calls.has(e.callId), 'duplicate_tool_call', 502);
+        const index = items.length;
+        const item = { id: 'fc_' + randomUUID().replaceAll('-', ''), type: 'function_call', call_id: e.callId,
+          status: 'in_progress', name: e.clientName, arguments: '', ...(e.namespace ? { namespace: e.namespace } : {}) };
+        items.push(item); calls.set(e.callId, { index, item });
+        return [emit('response.output_item.added', { output_index: index, item })];
+      }
+      if (e.type === 'tool-delta') {
+        const call = calls.get(e.callId);
+        ensure(call && call.item.status === 'in_progress', 'orphan_tool_input', 502);
+        call.item.arguments += e.delta;
+        return [emit('response.function_call_arguments.delta', { item_id: call.item.id, output_index: call.index, delta: e.delta })];
+      }
       if (e.type === 'tool-call') {
         const index = items.length;
         if (e.kind === 'tool_search') {
@@ -187,16 +201,17 @@ export function createResponsesEncoder(turn, profile) {
           return [emit('response.output_item.added', { output_index: index, item: { ...item, status: 'in_progress' } }),
             emit('response.output_item.done', { output_index: index, item })];
         }
-        const item = { id: 'fc_' + randomUUID().replaceAll('-', ''), type: 'function_call', call_id: e.callId,
-          status: 'completed', name: e.clientName, arguments: e.rawArguments,
-          ...(e.namespace ? { namespace: e.namespace } : {}) };
-        items.push(item);
-        return [emit('response.output_item.added', { output_index: index, item: { ...item, status: 'in_progress', arguments: '' } }),
-          emit('response.function_call_arguments.delta', { item_id: item.id, output_index: index, delta: e.rawArguments }),
-          emit('response.function_call_arguments.done', { item_id: item.id, output_index: index, name: item.name, arguments: e.rawArguments }),
-          emit('response.output_item.done', { output_index: index, item })];
+        const output = calls.has(e.callId) ? [] : this.push({ ...e, type: 'tool-start' });
+        const call = calls.get(e.callId), item = call.item;
+        ensure(item.status === 'in_progress' && item.name === e.clientName && (!item.arguments || item.arguments === e.rawArguments), 'tool_arguments_mismatch', 502);
+        if (!item.arguments) output.push(...this.push({ type: 'tool-delta', callId: e.callId, delta: e.rawArguments }));
+        item.status = 'completed';
+        return [...output,
+          emit('response.function_call_arguments.done', { item_id: item.id, output_index: call.index, name: item.name, arguments: e.rawArguments }),
+          emit('response.output_item.done', { output_index: call.index, item })];
       }
       ensure(e.type === 'finish', 'encoder_state_error', 500);
+      ensure([...calls.values()].every(c => c.item.status === 'completed'), 'incomplete_tool_arguments', 502);
       const output = [...blocks.values()].flatMap(close);
       usage = responsesUsage(e.usage);
       status = e.reason === 'max_tokens' ? 'incomplete' : 'completed';

@@ -93,7 +93,7 @@ export function decodeAnthropic(body, context, profile) {
 
 export function createAnthropicEncoder(turn, profile) {
   const id = 'msg_' + randomUUID().replaceAll('-', '');
-  const blocks = new Map(), content = [];
+  const blocks = new Map(), calls = new Map(), content = [];
   let started = false, terminal = false, completed = false, usage = null, reason = null;
   const snapshot = () => ({ id, type: 'message', role: 'assistant', model: turn.publicModel,
     content: structuredClone(content), stop_reason: reason, stop_sequence: null, usage });
@@ -129,17 +129,30 @@ export function createAnthropicEncoder(turn, profile) {
         block.block.text += e.text;
         return [{ type: 'content_block_delta', index: block.index, delta: { type: 'text_delta', text: e.text } }];
       }
+      if (e.type === 'tool-start') {
+        ensure(!calls.has(e.callId), 'duplicate_tool_call', 502);
+        const index = content.length;
+        const block = { type: 'tool_use', id: e.callId, name: e.clientName, input: {} };
+        content.push(block); calls.set(e.callId, { index, block, raw: '', closed: false });
+        return [{ type: 'content_block_start', index, content_block: structuredClone(block) }];
+      }
+      if (e.type === 'tool-delta') {
+        const call = calls.get(e.callId);
+        ensure(call && !call.closed, 'orphan_tool_input', 502);
+        call.raw += e.delta;
+        return [{ type: 'content_block_delta', index: call.index, delta: { type: 'input_json_delta', partial_json: e.delta } }];
+      }
       if (e.type === 'tool-call') {
         ensure(e.kind === 'function', 'unsupported_tool_search_output', 502);
-        const index = content.length;
-        content.push({ type: 'tool_use', id: e.callId, name: e.clientName, input: structuredClone(e.input) });
-        return [
-          { type: 'content_block_start', index, content_block: { type: 'tool_use', id: e.callId, name: e.clientName, input: {} } },
-          { type: 'content_block_delta', index, delta: { type: 'input_json_delta', partial_json: e.rawArguments } },
-          { type: 'content_block_stop', index },
-        ];
+        const output = calls.has(e.callId) ? [] : this.push({ ...e, type: 'tool-start' });
+        const call = calls.get(e.callId);
+        ensure(!call.closed && call.block.name === e.clientName && (!call.raw || call.raw === e.rawArguments), 'tool_arguments_mismatch', 502);
+        if (!call.raw) output.push(...this.push({ type: 'tool-delta', callId: e.callId, delta: e.rawArguments }));
+        call.block.input = structuredClone(e.input);
+        return [...output, ...close(call)];
       }
       ensure(e.type === 'finish', 'encoder_state_error', 500);
+      ensure([...calls.values()].every(c => c.closed), 'incomplete_tool_arguments', 502);
       const output = [...blocks.values()].flatMap(close);
       usage = anthropicUsage(e.usage); reason = e.reason;
       terminal = true; completed = true;

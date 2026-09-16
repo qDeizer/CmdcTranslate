@@ -185,7 +185,7 @@ export function safeError(error) {
 }
 export function errorBody(protocol, error) {
   const e = safeError(error);
-  const message = 'Astra1: ' + e.code;
+  const message = 'Astra1: ' + e.code + (e.param ? ' (' + e.param + ')' : '');
   if (protocol === 'anthropic') return { type: 'error', error: {
     type: e.status === 401 ? 'authentication_error' : e.status === 429 ? 'rate_limit_error' : e.status < 500 ? 'invalid_request_error' : 'api_error',
     message,

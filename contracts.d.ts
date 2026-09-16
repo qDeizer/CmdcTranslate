@@ -104,6 +104,8 @@ export type BridgeEvent =
   | { type: "block-start"; segment: number; blockId: string; kind: "text" | "reasoning" }
   | { type: "block-delta"; segment: number; blockId: string; text: string }
   | { type: "block-end"; segment: number; blockId: string }
+  | { type: "tool-start"; segment: number; callId: string; clientName: string; namespace?: string }
+  | { type: "tool-delta"; segment: number; callId: string; delta: string }
   | { type: "tool-call"; segment: number; callId: string; clientName: string;
       namespace?: string; kind: Tool["kind"]; input: ObjectValue; rawArguments: string }
   | { type: "finish"; reason: FinishReason; usage: Usage;

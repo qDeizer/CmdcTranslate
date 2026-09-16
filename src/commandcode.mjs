@@ -173,14 +173,20 @@ export class NativeReducer {
       ensure(typeof id === 'string' && id.length, 'missing_call_id', 502);
       if (e.type === 'tool-input-start') {
         ensure(!this.tools.has(id) && !this.seenCalls.has(id), 'duplicate_tool_call', 502);
-        this.tools.set(id, { name: e.toolName, raw: '', ended: false, provider: e.providerExecuted === true });
+        const binding = this.request.toolsByWireName.get(e.toolName);
+        const streaming = e.providerExecuted !== true && binding?.kind === 'function';
+        this.tools.set(id, { name: e.toolName, raw: '', bytes: 0, ended: false, provider: e.providerExecuted === true, streaming });
+        if (streaming) return [event({ type: 'tool-start', callId: id, clientName: binding.clientName,
+          ...(binding.namespace ? { namespace: binding.namespace } : {}) })];
       } else {
         const tool = this.tools.get(id);
         ensure(tool && !tool.ended, 'orphan_tool_input', 502);
         if (e.type === 'tool-input-delta') {
           ensure(typeof e.delta === 'string', 'invalid_tool_delta', 502);
           tool.raw += e.delta;
-          ensure(Buffer.byteLength(tool.raw) <= this.profile.limits.toolArgumentBytes, 'tool_arguments_too_large', 502);
+          tool.bytes += Buffer.byteLength(e.delta);
+          ensure(tool.bytes <= this.profile.limits.toolArgumentBytes, 'tool_arguments_too_large', 502);
+          if (tool.streaming && e.delta.length) return [event({ type: 'tool-delta', callId: id, delta: e.delta })];
         } else if (e.type === 'tool-input-end') tool.ended = true;
         else throw new BridgeError('unknown_native_event', 502);
       }
@@ -192,6 +198,7 @@ export class NativeReducer {
       ensure(!this.seenCalls.has(id), 'duplicate_tool_call', 502);
       const tool = this.tools.get(id);
       if (tool) ensure(tool.ended && tool.name === name, 'incomplete_tool_arguments', 502);
+      ensure(!tool?.streaming || e.providerExecuted !== true, 'tool_ownership_changed', 502);
       const input = argumentsObject(e.input ?? e.args, undefined, 502);
       const raw = tool?.raw.length ? tool.raw : JSON.stringify(input);
       ensure(Buffer.byteLength(raw) <= this.profile.limits.toolArgumentBytes, 'tool_arguments_too_large', 502);
@@ -222,6 +229,8 @@ export class NativeReducer {
       : ['length', 'max_tokens'].includes(raw) ? 'max_tokens' : raw === 'pause_turn' ? 'pause_turn' : null;
     ensure(reason, 'unknown_finish_reason', 502);
     const open = [...this.blocks.values()].some(b => !b.closed);
+    // A preview may be partial; never mark an unvalidated client call complete.
+    ensure(![...this.tools.values()].some(t => t.streaming), 'incomplete_tool_arguments', 502);
     ensure(reason === 'max_tokens' || (!open && this.tools.size === 0), 'incomplete_native_content', 502);
     if (reason === 'tool_use') ensure(this.clientCalls > 0, 'empty_tool_finish', 502);
     if (reason === 'end_turn') ensure(this.visible || this.clientCalls > 0, 'empty_visible_output', 502);

@@ -31,6 +31,8 @@ export async function clientSettings(client, base, token, home, profile) {
       ANTHROPIC_DEFAULT_FABLE_MODEL: models.claude,
       CLAUDE_CODE_EFFORT_LEVEL: defaults.claude.effort,
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: '1',
+      // Interactive title generation uses JSON-schema output unavailable on this native wire.
+      CLAUDE_CODE_DISABLE_TERMINAL_TITLE: '1',
     } };
     await writeFile(settingsPath, JSON.stringify(settings) + '\n', { mode: 0o600 });
     return { env: { ...env, CLAUDE_CONFIG_DIR: home, ...settings.env },

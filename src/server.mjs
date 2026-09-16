@@ -188,7 +188,7 @@ export function makeServer(profile, credentials, options = {}) {
     const abort = new AbortController(); controllers.add(abort);
     const disconnected = () => { if (!res.writableFinished) abort.abort(new BridgeError('client_disconnected', 499)); };
     res.once('close', disconnected);
-    let protocol = 'responses', lease, iterator, encoder, outcome = 'error', code;
+    let protocol = 'responses', lease, iterator, encoder, outcome = 'error', code, param;
     let metrics, traceId, inferenceRoute = false;
     const textBlocks = new Set();
     try {
@@ -233,7 +233,7 @@ export function makeServer(profile, credentials, options = {}) {
         conversationBound: lease.bound, stream: turn.stream,
         samePrefixAsPrevious: lease.observePrefix({ model: actual.body.params.model, config: actual.body.config,
           system: actual.body.params.system, tools: actual.body.params.tools }), textDeltas: 0,
-        firstTextMs: null, lastTextMs: null };
+        firstTextMs: null, lastTextMs: null, toolDeltas: 0, firstToolMs: null, lastToolMs: null };
       encoder = protocol === 'anthropic' ? createAnthropicEncoder(turn, profile) : createResponsesEncoder(turn, profile);
       let pending = encoder.start(), pendingBytes = 0, committed = false, preludeDeadline, lastWrite = Date.now();
       const write = async events => {
@@ -245,6 +245,7 @@ export function makeServer(profile, credentials, options = {}) {
         committed = true;
         res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache, no-transform',
           'x-accel-buffering': 'no', 'connection': 'keep-alive' });
+        res.flushHeaders();
         await write(pending); pending = [];
       };
       iterator = generate(actual, profile, abort.signal)[Symbol.asyncIterator]();
@@ -269,6 +270,12 @@ export function makeServer(profile, credentials, options = {}) {
           if (preludeDeadline === undefined) preludeDeadline = Date.now() + profile.timeouts.preludeMs;
         } else {
           if (value.type === 'block-delta' && value.text.length) metrics.firstContentMs ??= Date.now() - startedAt;
+          if (value.type === 'tool-delta' && value.delta.length) {
+            metrics.firstContentMs ??= Date.now() - startedAt;
+            metrics.toolDeltas++;
+            metrics.firstToolMs ??= Date.now() - startedAt;
+            metrics.lastToolMs = Date.now() - startedAt;
+          }
           const frames = encoder.push(value);
           if (value.type === 'block-start' && value.kind === 'text') textBlocks.add(value.segment + ':' + value.blockId);
           if (value.type === 'block-delta' && textBlocks.has(value.segment + ':' + value.blockId) && value.text.length) {
@@ -290,7 +297,7 @@ export function makeServer(profile, credentials, options = {}) {
             else {
               pending.push(...frames);
               pendingBytes += frames.reduce((n, e) => n + Buffer.byteLength(JSON.stringify(e)), 0);
-              if ((value.type === 'block-delta' && value.text.length > 0) || value.type === 'tool-call' || value.type === 'finish'
+              if ((value.type === 'block-delta' && value.text.length > 0) || ['tool-start', 'tool-delta', 'tool-call', 'finish'].includes(value.type)
                 || pendingBytes >= profile.prelude.maxBytes || pending.length >= profile.prelude.maxEvents) await commit();
             }
           }
@@ -301,7 +308,7 @@ export function makeServer(profile, credentials, options = {}) {
       if (turn.stream) res.end(); else sendJson(res, 200, encoder.result());
       outcome = 'ok';
     } catch (error) {
-      const e = safeError(abort.signal.reason ?? error); code = e.code;
+      const e = safeError(abort.signal.reason ?? error); code = e.code; param = e.param;
       if (!res.destroyed && !res.writableEnded) {
         if (res.headersSent && encoder) {
           try {
@@ -317,7 +324,7 @@ export function makeServer(profile, credentials, options = {}) {
       controllers.delete(abort);
       res.off('close', disconnected);
       // Allowlist only: no body, path, headers, session identifiers or raw exceptions.
-      const record = { requestId, protocol, outcome, ...(code ? { code } : {}), durationMs: Date.now() - startedAt,
+      const record = { requestId, protocol, outcome, ...(code ? { code, ...(param ? { param } : {}) } : {}), durationMs: Date.now() - startedAt,
         ...(metrics ? { metrics } : {}) };
       if (inferenceRoute && (metrics || code)) {
         diagnostics.push({ ...record, at: new Date(startedAt).toISOString(), traceId: traceId ?? null });

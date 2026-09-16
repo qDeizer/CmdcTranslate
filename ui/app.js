@@ -303,13 +303,14 @@ async function loadRequests() {
       for (const text of [new Date(r.at).toLocaleTimeString('tr-TR') + ' · ' + r.protocol,
         (m.publicModel ?? '—') + ' → ' + (m.upstreamModel ?? '—'),
         (m.requestedEffort ?? 'varsayılan') + ' → ' + (m.upstreamEffort ?? 'gönderilmedi'),
-        seconds(m.firstTextMs) + ' / ' + seconds(r.durationMs),
+        seconds(m.firstContentMs) + ' / ' + seconds(r.durationMs),
         num(m.inputTokens) + ' / ' + num(m.cacheReadTokens) + ' / ' + num(m.uncachedInputTokens),
-        r.traceId ?? 'gönderilmedi', r.outcome === 'ok' ? 'Tamamlandı' : r.code ?? 'Hata']) {
+        r.traceId ?? 'gönderilmedi', r.outcome === 'ok' ? 'Tamamlandı' : (r.code ?? 'Hata') + (r.param ? ' (' + r.param + ')' : '')]) {
         const td = document.createElement('td'); td.textContent = text; tr.append(td);
       }
       tr.title = 'Hesap izi: ' + (m.accountFingerprint ?? '?') + ' · Sabit prompt bölümleri: ' +
-        (m.samePrefixAsPrevious === null ? 'ilk istek' : m.samePrefixAsPrevious ? 'aynı' : 'değişti') + ' · Metin parçası: ' + (m.textDeltas ?? 0);
+        (m.samePrefixAsPrevious === null ? 'ilk istek' : m.samePrefixAsPrevious ? 'aynı' : 'değişti') + ' · Metin parçası: ' + (m.textDeltas ?? 0) +
+        ' · Araç parçası: ' + (m.toolDeltas ?? 0) + ' · İlk metin: ' + seconds(m.firstTextMs) + ' · İlk araç: ' + seconds(m.firstToolMs);
       return tr;
     }));
   } catch { $('#request-summary').textContent = 'İstek kayıtları alınamadı. Yenile ile tekrar deneyin.'; }

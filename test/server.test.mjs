@@ -155,6 +155,12 @@ test('F28 F29 F30 F33 auth, count_tokens error boundary, limits, no secret loggi
     const count = await fetch(url + '/v1/messages/count_tokens', { method: 'POST', headers,
       body: JSON.stringify({ model: 'astra-muse', messages: [{ role: 'user', content: 'secret-prompt-sentinel' }] }) });
     assert.equal(count.status, 200); assert.equal(count.headers.get('x-astra-token-count'), 'estimate');
+    const badFormat = await send('anthropic', { output_config: { 'private-key-name-sentinel': true } });
+    assert.equal(badFormat.status, 422);
+    const badFormatBody = await badFormat.text();
+    assert(badFormatBody.includes('unsupported_parameter (output_config)'));
+    assert(!badFormatBody.includes('private-key-name-sentinel'));
+    assert.equal(logs.at(-1).param, 'output_config');
     const conflict = await send('responses', {}, { headers: { 'x-api-key': 'wrong-key' } });
     assert.equal(conflict.status, 401);
     const unsupported = await send('responses', { previous_response_id: 'secret-session' });
